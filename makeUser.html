@@ -7,32 +7,64 @@
 	<title>Create User</title>
 </head>
 <body>
-	<div class="container">
+	
+	<div id="container">
+  		<video autoplay muted loop>
+    		<source src="assets/video/Shoes.mp4" type="video/mp4">
+  		</video>
+		  <div id="logo">HealthDash</div>
+		<div id="overlay" class = "panel panel-default">
+			<div class = "panel panel-body">
+				<form>
+					<div class ="form-group">
+						
+						<input type="email" placeholder="E-mail" class="form-control" id="email"></input>
+					</div>
 
-		<label>Email</label>
-		<input id="email"></input><br>
+					<div class ="form-group">
+						
+						<input type="password" placeholder="Password" class="form-control" id="password"></input>
+					</div>
+					
+					<div class ="form-group">
+						
+						<input type="text" placeholder="Full Name" class="form-control" id="name"></input>
+					</div>
 
-		<label>Password</label>
-		<input id="password"></input><br>
+					<div class ="form-group">
+						
+						<input type="text" placeholder="Age" class="form-control" id="number"></input>
+					</div>
 
-		<label>Name</label>
-		<input id="name"></input><br>
+					<div class ="form-group">
+						
+						<input type="text" placeholder="Height (inches)" class="form-control" id="height"></input>
+					</div>
+					
+					<div class ="form-group">
+						
+						<input type="text" placeholder="Weight (lbs)" class="form-control" id="weight"></input>
+					</div>
+					
+					<div class ="form-group">
 
-		<label>Age</label>
-		<input id="age"></input><br>
+						<select id="gender" class="form-control" placeholder="Gender">
+							<option value="Gender" disabled>Gender</option>
+							<option>Male</option>
+							<option>Female</option>
+						</select>
+					</div>
 
-		<label>Height</label>
-		<input id="height"></input><br>
+						<button id="create" class= "btn btn-primary">Welcome!</button>
+				</form>
 
-		<label>Weight</label>
-		<input id="weight"></input><br>
-
-		<label>Gender</label>
-		<input id="gender"></input><br>
-
-		<button id="create">Welcome!</button>
+			</div>
 		
+		</div>
+
 	</div>
+
+
 
 	
 
@@ -40,6 +72,7 @@
 	<script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script type="text/javascript" src="assets/javascript/firebase.js"></script>
+	<script type="text/javascript" src="assets/javascript/visual.js"></script>
 	<link href="assets/css/style.css" rel="stylesheet" />
 
 </body>
