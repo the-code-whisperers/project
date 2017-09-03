@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<title>HealthDash</title>
+</head>
+<body>
+	
+	<div id="container">
+  		<video autoplay muted loop>
+    		<source src="assets/video/Shoes.mp4" type="video/mp4">
+  		</video>
+
+		<div id="logo">HealthDash</div>
+
+		<div class="row">
+
+			<div class="col-md-6">
+				<div id="overlay" class = "panel panel-default">
+
+
+					<div class="panel-heading">
+			        	<h1 class="panel-title">Login</h1>
+			        </div>
+
+					<div class = "panel panel-body">
+
+						<div class ="form-group">	
+							<input type="email" placeholder="E-mail" class="form-control" id="email"></input>
+						</div>
+
+						<div class ="form-group">		
+							<input type="password" placeholder="Password" class="form-control" id="password"></input>
+						</div>
+							
+						<button id="login" class= "btn btn-primary">Login</button>		
+
+					</div>
+				
+				</div>
+			</div>
+
+			<div class="col-md-6">
+
+
+
+
+				<div id="overlay" class = "panel panel-default" id = "register">
+
+					<div class="panel-heading">
+			        	<h1 class="panel-title">I'm new!</h1>
+			        </div>
+
+					<div class = "panel panel-body">
+							
+						<a href = "makeUser.html"><button id="register" class= "btn btn-primary">Register</button></a>
+
+					</div>			
+				</div>
+
+			</div>
+
+		</div>
+
+
+		<div class = "row">
+			<div id="login-failed">
+
+				<div class = "col-xs-5">
+				</div>
+
+				<div class = "col-xs-2">
+					<div class="alert alert-danger" role="alert" id="failed-message"><h4>Hi there!</h4></div>
+				</div>
+
+				<div class = "col-xs-5">
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+
+	
+
+
+	<script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="assets/javascript/login.js"></script>
+	<!--<script type="text/javascript" src="assets/javascript/visual.js"></script>-->
+	<link href="assets/css/login.css" rel="stylesheet" />
+
+</body>
+</html>
