@@ -12,7 +12,7 @@ var foodsSearchResults = $('#foods-search-result')
 
 $('#button').on('click', function(event)
 {
-	search = $('#search').val().trim()
+	search = $('#search').val().trim();
 
 	$.ajax({
 		url: "https://api.nutritionix.com/v1_1/search/"+search+"?results=0:20&fields=*&appId="+nutAppID+"&appKey="+nutAppKey+"",
@@ -27,7 +27,7 @@ $('#button').on('click', function(event)
 			var id = response.hits[i]._id
 			var brandName =  response.hits[i].fields.brand_name;
 			var cals = Math.round(response.hits[i].fields.nf_calories);
-			var newButton = $("<button class='food-picked'>"+name+": "+brandName+", ("+cals+")</button>");
+			var newButton = $("<button class='btn btn-default food-picked'>"+name+": "+brandName+", ("+cals+")</button>");
 			newButton.attr('id', id)
 			foodsSearchResults.append(newButton)
 		}
