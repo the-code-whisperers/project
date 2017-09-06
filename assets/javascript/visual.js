@@ -1,6 +1,6 @@
 // JS
 var video = document.querySelector('video')
-  , container = document.querySelector('#container');
+  , container = document.querySelector('.container-fluid');
  
 var setVideoDimensions = function () {
   

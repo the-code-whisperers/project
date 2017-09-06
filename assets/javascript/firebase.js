@@ -67,10 +67,8 @@ $('#create').on('click', function(event)
           gender: gender
         })
       }
-    }
-    
+    }  
   })
-
 })
 
 

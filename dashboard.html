@@ -8,6 +8,21 @@
 </head>
 <body>
 	<div class="container">
+
+		<div class="row">
+
+			<div class="col-md-3 text-center">
+				<h1 id="user-name"></h1>
+			</div>
+
+			<div class="col-md-6 text-center">
+				<div id="logo">HealthDash</div>
+				<h1 id="cals">0</h1>
+			</div>
+
+			<div class="col-md-3 text-center">
+			</div>
+		</div>
 		
 		<div class="row">
 			<div class="col-md-12">
@@ -19,15 +34,14 @@
 		</div>
 
 		<div class="row">
-			<div class="col-md-6 text-center">
-				<h1 id="cals">0</h1>
-			</div>
-		</div>
-
-		<div class="row">
 			<div class="col-md-6">
 				<input placeholder="What did you eat today?" id="search"></input>
 				<button id="button">Add</button>
+			</div>
+
+			<div class="col-md-6">
+				<input placeholder="What exercises have you done?" id="exercise-search"></input>
+				<button id="exercise-button">Add</button>
 			</div>
 		</div>
 
@@ -44,7 +58,6 @@
 				</div>
 			</div>
 		</div>
-
 	</div>
 
 	
@@ -52,9 +65,10 @@
 
 	<script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script type="text/javascript" src="assets/javascript/script.js"></script>
+	<script type="text/javascript" src="assets/javascript/nutrition.js"></script>
 	<script type="text/javascript" src="assets/javascript/firebase.js"></script>
-	<link href="assets/css/style.css" rel="stylesheet" />
+	<link href="assets/css/login.css" rel="stylesheet" />
+	<link href="assets/css/dashboard.css" rel="stylesheet" />
 
 </body>
 </html>

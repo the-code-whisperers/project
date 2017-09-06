@@ -17,7 +17,6 @@ var loginFailed = $('#login-failed')
 var failedMessage = $('#failed-message')
 
 
-
 $('#login').on('click', function(event)
 {
     console.log("hi!")
@@ -55,17 +54,29 @@ $('#login').on('click', function(event)
 
         if (!correctEmail)
         {
-            loginFailed.show()
-            failedMessage.html("We don't have this email in our system, would you like to register?")
+            var splitEmail = email.split('')
+            var validEmail = false
+            for (var i=0; i<splitEmail.length; i++)
+            {
+                if (splitEmail[i] === '@')
+                {
+                    validEmail = true
+                }
+            }
+
+            if (validEmail)
+            {
+                loginFailed.show()
+                failedMessage.html("We don't have this email in our system, would you like to register?")     
+            }
+
+            else
+            {
+                loginFailed.show()
+                failedMessage.html("We don't recognize this as an email.")        
+            }
         }
-
-/*        if (!loggedIn)
-        {
-            alert("There was an error!")
-        }*/
-    
-  })
-
+    })
 })
 
 $('#create').on('click', function(event)
@@ -90,7 +101,8 @@ $('#create').on('click', function(event)
         age: age,
         height: height,
         weight: weight,
-        gender: gender
+        gender: gender,
+        calories: 0
       })
     }
 
@@ -108,17 +120,39 @@ $('#create').on('click', function(event)
 
       if (newEmail)
       {
-        var userID = snap.val().length
-        database.ref('users/'+userID).set(
+        var splitEmail = email.split('')
+        var validEmail = false
+
+        for (var i=0; i<splitEmail.length; i++)
         {
-          name: name,
-          email: email,
-          password: password,
-          age: age,
-          height: height,
-          weight: weight,
-          gender: gender
-        })
+
+          if (splitEmail[i] === '@')
+          {
+              validEmail = true
+          }
+        }
+
+        if (validEmail)
+        {
+            var userID = snap.val().length
+            database.ref('users/'+userID).set(
+            {
+              name: name,
+              email: email,
+              password: password,
+              age: age,
+              height: height,
+              weight: weight,
+              gender: gender,
+              calories: 0
+            })
+        }
+
+        else
+        {
+          $('.form-contorl #new-email').css("border", "1px, solid red")
+            console.log("This is not a valid Email!")
+        }
       }
     }  
   })
