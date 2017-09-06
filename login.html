@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<title>HealthDash</title>
+</head>
+<body>
+	
+	<div class="container">
+  		<video autoplay muted loop>
+    		<source src="assets/video/Shoes.mp4" type="video/mp4">
+  		</video>
+
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<div id="logo">HealthDash</div>
+			</div>
+		</div>
+
+
+		<div class="row">
+
+			<div class="col-md-8">
+				<div id="overlay" class = "panel panel-default">
+
+					<div class="panel-heading">
+			        	<h1 class="panel-title">Login</h1>
+			        </div>
+
+					<div class = "panel panel-body">
+						<div class ="form-group">	
+							<input type="email" placeholder="E-mail" class="form-control" id="email"></input>
+						</div>
+
+						<div class ="form-group">		
+							<input type="password" placeholder="Password" class="form-control" id="password"></input>
+						</div>
+							
+						<button id="login" class= "btn btn-primary">Login</button>		
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-4">
+				<div id="overlay" class = "panel panel-default" id = "register">
+
+					<div class="panel-heading">
+			        	<h1 class="panel-title">I'm new!</h1>
+			        </div>
+
+					<div class = "panel panel-body">		
+						<button id="register" class= "btn btn-primary text-center" data-toggle="modal" data-target="#myModal">Register</button>
+						<!--<a href = "makeUser.html"><button id="register" class= "btn btn-primary text-center">Register</button></a>-->
+
+					</div>			
+				</div>
+			</div>
+
+		</div>
+
+
+		<div class = "row">
+			<div id="login-failed">
+
+				<div class = "col-xs-8 text-center">
+					<div class="alert alert-danger" role="alert" id="failed-message"><h4>Hi there!</h4></div>
+				</div>
+
+				<div class = "col-xs-4">
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+<!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Let's Sign You Up!</h4>
+        </div>
+        <div class="modal-body">
+
+
+		<div class = "panel panel-body">
+
+				<form>
+
+					<div class ="form-group">
+						
+						<input type="email" placeholder="E-mail" class="form-control" id="new-email"></input>
+					</div>
+
+					<div class ="form-group">
+						
+						<input type="password" placeholder="Password" class="form-control" id="new-password"></input>
+					</div>
+					
+					<div class ="form-group">
+						
+						<input type="text" placeholder="Full Name" class="form-control" id="new-name"></input>
+					</div>
+
+					<div class ="form-group">
+						
+						<input type="number" placeholder="Age" class="form-control" id="new-age"></input>
+					</div>
+
+					<div class ="form-group">
+						
+						<input type="text" placeholder="Height (inches)" class="form-control" id="new-height"></input>
+					</div>
+					
+					<div class ="form-group">
+						
+						<input type="text" placeholder="Weight (lbs)" class="form-control" id="new-weight"></input>
+					</div>
+					
+					<div class ="form-group">
+
+						<select id="new-gender" class="form-control" placeholder="Gender">
+							<option value="Gender">Gender</option>
+							<option>Male</option>
+							<option>Female</option>
+						</select>
+					</div>
+
+					</div>
+
+					<button type="button" id="create" class= "btn btn-primary">Welcome!</button>
+
+				</form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+	
+
+
+	<script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="assets/javascript/login.js"></script>
+	<script type="text/javascript" src="assets/javascript/visual.js"></script>
+	<!--<script type="text/javascript" src="assets/javascript/firebase.js"></script>-->
+	<link href="assets/css/login.css" rel="stylesheet" />
+
+</body>
+</html>
