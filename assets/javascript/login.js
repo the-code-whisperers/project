@@ -36,10 +36,11 @@ $('#login').on('click', function(event)
         {
             if (snap.val()[i].email === email && snap.val()[i].password === password)
             {
-                alert("You're logged in as "+snap.val()[i].name)
+                sessionStorage.setItem("userID", i);
                 correctEmail = true
                 correctPassword = true
                 loggedIn = true
+                window.location.href = 'dashboard.html';
                 break;
             }
 
@@ -93,6 +94,7 @@ $('#create').on('click', function(event)
   {
     if (!snap.hasChild('0'))
     {
+      sessionStorage.setItem("userID", 0);
       database.ref('users/0').set(
       {
         name: name,
@@ -104,6 +106,7 @@ $('#create').on('click', function(event)
         gender: gender,
         calories: 0
       })
+      window.location.href = 'dashboard.html';
     }
 
     else
@@ -135,6 +138,7 @@ $('#create').on('click', function(event)
         if (validEmail)
         {
             var userID = snap.val().length
+            sessionStorage.setItem("userID", userID);
             database.ref('users/'+userID).set(
             {
               name: name,
@@ -146,6 +150,8 @@ $('#create').on('click', function(event)
               gender: gender,
               calories: 0
             })
+
+            window.location.href = 'dashboard.html';
         }
 
         else

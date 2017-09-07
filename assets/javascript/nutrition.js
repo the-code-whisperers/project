@@ -40,8 +40,6 @@ var search = '';
 
 //"https://api.nutritionix.com/v1_1/search/"+search+"?results=0:20&fields=*&appId="+nutAppID+"&appKey="+nutAppKey+"",
 //test id: "51d37a92cc9bff5553aa9f36"
-var totalCals = 0;
-var calGoal = 2000;
 var calMax = 3000;
 var progressBar = $('.progress-bar')
 var foodsSearchResults = $('#foods-search-result')
@@ -126,7 +124,6 @@ $(document).on('click', '.food-picked', function(event)
 			var name = response.item_name
 			var cals = Math.round(response.nf_calories)
 			var calsBefore = 0;
-			totalCals = totalCals + cals
 			var addedFood = $("<h4 class='added-food'>"+name+": "+cals+"</h4>")
 			$('#foods-added').append(addedFood)
 			console.log("snap cals"+snap.val().calories)
