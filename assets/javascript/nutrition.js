@@ -12,26 +12,46 @@ var config =
 firebase.initializeApp(config);
 
 var database = firebase.database()
-var userID = sessionStorage.getItem("userID")
+var token = sessionStorage.getItem("userID")
+var userID  = -1;
 var userName = "";
 var userCals = 0;
 var calDiv = $('#cals')
 
-database.ref("users/"+userID).once('value', function(snap)
+database.ref("users").once("value", function(snap)
+{
+	console.log(snap.val()[0].token)
+	for (var i=0; i<snap.val().length; i++)
+	{
+		if (snap.val()[i].token === token)
+		{
+			userID = i;
+			userName = snap.val()[i].name;
+			userCals = snap.val()[i].calories;
+			$('#user-name').html(userName)
+			calDiv.html(userCals)
+		}
+	}
+})
+
+/*database.ref("users/"+userID).once('value', function(snap)
 {
 	console.log(snap.val())
 	userName = snap.val().name;
 	userCals = snap.val().calories;
 	$('#user-name').html(userName)
 	calDiv.html(userCals)
-})
+})*/
 
-database.ref("users/"+userID).on('value', function(snap)
+database.ref("users").on('value', function(snap)
 {
-	var currentCals = snap.val().calories
-	calDiv.html(currentCals)
-	var progressPercent = currentCals/calMax*100
-	progressBar.css('width', progressPercent+'%')
+	if (userID !== -1)
+	{
+		var currentCals = snap.val()[userID].calories
+		calDiv.html(currentCals)
+		var progressPercent = currentCals/calMax*100
+		progressBar.css('width', progressPercent+'%')
+	}
 })
 
 var nutAppID = 'c79bdc2c';

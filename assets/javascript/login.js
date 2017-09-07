@@ -16,6 +16,19 @@ var database = firebase.database()
 var loginFailed = $('#login-failed')
 var failedMessage = $('#failed-message')
 
+var createToken = function()
+{
+    var chars = ["1","2","3","4","5","6","7","8","9","0","q","w","e","r","t","y","u","i","o","p","a","s","d","f","g","h","j","k","l","z","x","c","v","b","n","m"]
+    var token = ""
+
+    for (var i=0; i<10; i++)
+    {
+        var r = Math.floor(Math.random() * chars.length);
+        token = token+chars[r]
+    }
+
+    return token;
+}
 
 $('#login').on('click', function(event)
 {
@@ -36,10 +49,17 @@ $('#login').on('click', function(event)
         {
             if (snap.val()[i].email === email && snap.val()[i].password === password)
             {
-                sessionStorage.setItem("userID", i);
                 correctEmail = true
                 correctPassword = true
                 loggedIn = true
+                var token = createToken()
+                sessionStorage.setItem("userID", token);
+
+                database.ref("users/"+i).update(
+                {
+                    token: token
+                })
+
                 window.location.href = 'dashboard.html';
                 break;
             }
@@ -94,7 +114,8 @@ $('#create').on('click', function(event)
   {
     if (!snap.hasChild('0'))
     {
-      sessionStorage.setItem("userID", 0);
+      var token = createToken()
+      sessionStorage.setItem("userID", token);
       database.ref('users/0').set(
       {
         name: name,
@@ -104,7 +125,8 @@ $('#create').on('click', function(event)
         height: height,
         weight: weight,
         gender: gender,
-        calories: 0
+        calories: 0,
+        token: token
       })
       window.location.href = 'dashboard.html';
     }
@@ -138,7 +160,8 @@ $('#create').on('click', function(event)
         if (validEmail)
         {
             var userID = snap.val().length
-            sessionStorage.setItem("userID", userID);
+            var token = createToken()
+            sessionStorage.setItem("userID", token);
             database.ref('users/'+userID).set(
             {
               name: name,
@@ -148,7 +171,8 @@ $('#create').on('click', function(event)
               height: height,
               weight: weight,
               gender: gender,
-              calories: 0
+              calories: 0,
+              token: token
             })
 
             window.location.href = 'dashboard.html';
