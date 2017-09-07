@@ -30,6 +30,8 @@ database.ref("users").once("value", function(snap)
 			userCals = snap.val()[i].calories;
 			$('#user-name').html(userName)
 			calDiv.html(userCals)
+			var progressPercent = userCals/calMax*100
+			progressBar.css('width', progressPercent+'%')
 		}
 	}
 })
