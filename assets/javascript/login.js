@@ -32,13 +32,11 @@ var createToken = function()
 
 $('#login').on('click', function(event)
 {
-    console.log("hi!")
     var email = $('#email').val().trim()
     var password = $('#password').val().trim()
     var correctEmail = false
     var correctPassword = false
     var loggedIn = false
-
 
     database.ref('users').once('value', function(snap)
     {
@@ -47,21 +45,28 @@ $('#login').on('click', function(event)
 
         for (var i=0; i<snap.val().length; i++)
         {
-            if (snap.val()[i].email === email && snap.val()[i].password === password)
+            if (snap.val()[i].email === email)
             {
-                correctEmail = true
-                correctPassword = true
-                loggedIn = true
-                var token = createToken()
-                sessionStorage.setItem("userID", token);
+                var userSalt = snap.val()[i].salt;
+                var userHash = snap.val()[i].hash;
+                var createdHash = createHash(password, userSalt)
 
-                database.ref("users/"+i).update(
+                if (createdHash === userHash)
                 {
-                    token: token
-                })
+                  correctEmail = true
+                  correctPassword = true
+                  loggedIn = true
+                  var token = createToken()
+                  sessionStorage.setItem("userID", token);
 
-                window.location.href = 'dashboard.html';
-                break;
+                  database.ref("users/"+i).update(
+                  {
+                      token: token
+                  })
+
+                  window.location.href = 'dashboard.html';
+                  break;
+                }
             }
 
             if (snap.val()[i].email === email && snap.val()[i].password !== password)
@@ -110,6 +115,10 @@ $('#create').on('click', function(event)
   var weight = $('#new-weight').val().trim()
   var gender = $('#new-gender').val().trim()
 
+  var salt = createSalt()
+  var hash = createHash(password, salt)
+
+
   database.ref('users').once('value', function(snap)
   {
     if (!snap.hasChild('0'))
@@ -120,7 +129,8 @@ $('#create').on('click', function(event)
       {
         name: name,
         email: email,
-        password: password,
+        salt: salt,
+        hash: hash,
         age: age,
         height: height,
         weight: weight,
@@ -166,7 +176,8 @@ $('#create').on('click', function(event)
             {
               name: name,
               email: email,
-              password: password,
+              salt: salt,
+              hash: hash,
               age: age,
               height: height,
               weight: weight,
