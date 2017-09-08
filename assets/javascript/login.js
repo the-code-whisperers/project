@@ -40,9 +40,6 @@ $('#login').on('click', function(event)
 
     database.ref('users').once('value', function(snap)
     {
-        console.log(snap.val())
-        console.log(snap.val().length)
-
         for (var i=0; i<snap.val().length; i++)
         {
             if (snap.val()[i].email === email)
@@ -118,85 +115,81 @@ $('#create').on('click', function(event)
   var salt = createSalt()
   var hash = createHash(password, salt)
 
+  $.ajax({
+      url: "https://apilayer.net/api/check?access_key=ecd139f85be6b1d868b48ce6f827bed9&email="+email+"",
+      method: "GET"
+  }).done(function(response)
+  { 
+      var validEmail = response.format_valid
+      console.log("This is a valid email: "+validEmail)
 
-  database.ref('users').once('value', function(snap)
-  {
-    if (!snap.hasChild('0'))
-    {
-      var token = createToken()
-      sessionStorage.setItem("userID", token);
-      database.ref('users/0').set(
+      if (validEmail)
       {
-        name: name,
-        email: email,
-        salt: salt,
-        hash: hash,
-        age: age,
-        height: height,
-        weight: weight,
-        gender: gender,
-        calories: 0,
-        token: token
-      })
-      window.location.href = 'dashboard.html';
-    }
-
-    else
-    {
-      var newEmail = true;
-      for (var i=0; i<snap.val().length; i++)
-      {
-        if (email === snap.val()[i].email)
-        {
-          newEmail = false;
-          console.log("This email is already taken!")
-        }
-      }
-
-      if (newEmail)
-      {
-        var splitEmail = email.split('')
-        var validEmail = false
-
-        for (var i=0; i<splitEmail.length; i++)
-        {
-
-          if (splitEmail[i] === '@')
+          database.ref('users').once('value', function(snap)
           {
-              validEmail = true
-          }
-        }
-
-        if (validEmail)
-        {
-            var userID = snap.val().length
-            var token = createToken()
-            sessionStorage.setItem("userID", token);
-            database.ref('users/'+userID).set(
+            if (!snap.hasChild('0'))
             {
-              name: name,
-              email: email,
-              salt: salt,
-              hash: hash,
-              age: age,
-              height: height,
-              weight: weight,
-              gender: gender,
-              calories: 0,
-              token: token
-            })
+              var token = createToken()
+              sessionStorage.setItem("userID", token);
+              database.ref('users/0').set(
+              {
+                name: name,
+                email: email,
+                salt: salt,
+                hash: hash,
+                age: age,
+                height: height,
+                weight: weight,
+                gender: gender,
+                calories: 0,
+                token: token
+              })
+              window.location.href = 'dashboard.html';
+            }
 
-            window.location.href = 'dashboard.html';
-        }
+            else
+            {
+              var newEmail = true;
 
-        else
-        {
-          $('.form-contorl #new-email').css("border", "1px, solid red")
-            console.log("This is not a valid Email!")
-        }
+              for (var i=0; i<snap.val().length; i++)
+              {
+                if (email === snap.val()[i].email)
+                {
+                  newEmail = false;
+                  console.log("This email is already taken!")
+                }
+              }
+
+              if (newEmail)
+              {
+                  var userID = snap.val().length
+                  var token = createToken()
+                  sessionStorage.setItem("userID", token);
+                  database.ref('users/'+userID).set(
+                  {
+                    name: name,
+                    email: email,
+                    salt: salt,
+                    hash: hash,
+                    age: age,
+                    height: height,
+                    weight: weight,
+                    gender: gender,
+                    calories: 0,
+                    token: token
+                  })
+
+                  window.location.href = 'dashboard.html';
+              }
+            } 
+        })
       }
-    }  
-  })
+
+      else
+      {
+          console.log("This is not a valid email address!")
+      }
+  });
 })
 
 
