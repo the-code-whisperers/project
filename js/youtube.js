@@ -19,7 +19,11 @@ $(document).ready(function() {
 
       key: 'AIzaSyD7beeskMiAH3aGuOyURD06SuubXkNHmx8',
 
-      q: searchTerm
+      maxResults: 10,
+
+      q: searchTerm,
+
+
     }
 
     url='https://www.googleapis.com/youtube/v3/search'
