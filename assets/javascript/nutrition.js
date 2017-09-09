@@ -12,26 +12,48 @@ var config =
 firebase.initializeApp(config);
 
 var database = firebase.database()
-var userID = sessionStorage.getItem("userID")
+var token = sessionStorage.getItem("userID")
+var userID  = -1;
 var userName = "";
 var userCals = 0;
 var calDiv = $('#cals')
 
-database.ref("users/"+userID).once('value', function(snap)
+database.ref("users").once("value", function(snap)
+{
+	console.log(snap.val()[0].token)
+	for (var i=0; i<snap.val().length; i++)
+	{
+		if (snap.val()[i].token === token)
+		{
+			userID = i;
+			userName = snap.val()[i].name;
+			userCals = snap.val()[i].calories;
+			$('#user-name').html(userName)
+			calDiv.html(userCals)
+			var progressPercent = userCals/calMax*100
+			progressBar.css('width', progressPercent+'%')
+		}
+	}
+})
+
+/*database.ref("users/"+userID).once('value', function(snap)
 {
 	console.log(snap.val())
 	userName = snap.val().name;
 	userCals = snap.val().calories;
 	$('#user-name').html(userName)
 	calDiv.html(userCals)
-})
+})*/
 
-database.ref("users/"+userID).on('value', function(snap)
+database.ref("users").on('value', function(snap)
 {
-	var currentCals = snap.val().calories
-	calDiv.html(currentCals)
-	var progressPercent = currentCals/calMax*100
-	progressBar.css('width', progressPercent+'%')
+	if (userID !== -1)
+	{
+		var currentCals = snap.val()[userID].calories
+		calDiv.html(currentCals)
+		var progressPercent = currentCals/calMax*100
+		progressBar.css('width', progressPercent+'%')
+	}
 })
 
 var nutAppID = 'c79bdc2c';
@@ -40,8 +62,6 @@ var search = '';
 
 //"https://api.nutritionix.com/v1_1/search/"+search+"?results=0:20&fields=*&appId="+nutAppID+"&appKey="+nutAppKey+"",
 //test id: "51d37a92cc9bff5553aa9f36"
-var totalCals = 0;
-var calGoal = 2000;
 var calMax = 3000;
 var progressBar = $('.progress-bar')
 var foodsSearchResults = $('#foods-search-result')
@@ -126,7 +146,6 @@ $(document).on('click', '.food-picked', function(event)
 			var name = response.item_name
 			var cals = Math.round(response.nf_calories)
 			var calsBefore = 0;
-			totalCals = totalCals + cals
 			var addedFood = $("<h4 class='added-food'>"+name+": "+cals+"</h4>")
 			$('#foods-added').append(addedFood)
 			console.log("snap cals"+snap.val().calories)
