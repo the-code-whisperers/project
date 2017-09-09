@@ -40,8 +40,21 @@
 			</div>
 
 			<div class="col-md-6">
-				<input placeholder="What exercises have you done?" id="exercise-search"></input>
-				<button id="exercise-button">Add</button>
+				<div class="container-fluid">
+			    
+					<div class="panel panel-primary">
+						<div class="panel-heading text-center">My Workout</div>
+					 	<div class="panel-body text-center" id="exercises"></div>
+					 	<div class="panel-body" id="exercise-info">
+					 		<div class="row">
+					 			<div class="col-md-6" id="exercise-instructions">
+						 			<div id="instructions"></div>
+						 			<div id="video"></div>
+						 		</div>
+					 			<div class="col-md-6" id="exercise-progress"></div>
+					 	</div>
+					</div>
+				</div>
 			</div>
 		</div>
 
@@ -65,9 +78,11 @@
 
 	<script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script type="text/javascript" src="assets/javascript/saltHash.js"></script>
+	<script src="assets/javascript/phase1.js"></script>
 	<script type="text/javascript" src="assets/javascript/nutrition.js"></script>
-	<script type="text/javascript" src="assets/javascript/firebase.js"></script>
+	<link href="assets/css/style-exercise.css" rel="stylesheet" />
+	<script src="assets/javascript/javascript-exercise.js"></script>
+<!-- 	<script type="text/javascript" src="assets/javascript/firebase.js"></script> -->
 	<link href="assets/css/login.css" rel="stylesheet" />
 	<link href="assets/css/dashboard.css" rel="stylesheet" />
 
