@@ -7,27 +7,32 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
-	<script src="assets/javascript/workouts.js"></script>
+	<script src="assets/javascript/phase1.js"></script>
 	<script src="assets/javascript/exerciseJS.js"></script>
 	<link href="assets/css/style.css" rel="stylesheet" />
+	
+
 </head>
 
 <body>
-	<div class="container">
-		<div class="panel panel-primary">
-			<div class="panel-heading text-center">Today's Workout</div>
-		 	<div class="panel-body text-center" id="exercises"></div>
-		</div>
+	<br>
+	<div class="container-fluid">
 
+<!-- 	
+        <input type='range' min='0' max='15' value='0' class='slider' id='myRange'>
+        Reps: <span id='demo'></span> -->
+    
 		<div class="panel panel-primary">
-			<div class="panel panel-primary">
-			 	<div class="panel-body text-center">
-					<div class="row">
-						<div class="col-md-4" id="exercise-info">Blah</div>
-						<div class="col-md-8" id="">YouTube info</div>
-					</div>
-				</div>
-			</div>
+			<div class="panel-heading text-center">My Workout</div>
+		 	<div class="panel-body text-center" id="exercises"></div>
+		 	<div class="panel-body" id="exercise-info">
+		 		<div class="row">
+		 			<div class="col-md-6" id="exercise-instructions">
+			 			<div id="instructions"></div>
+			 			<div id="video"></div>
+			 		</div>
+		 			<div class="col-md-6" id="exercise-progress"></div>
+		 	</div>
 		</div>
 	</div>
 	
