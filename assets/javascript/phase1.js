@@ -4,6 +4,7 @@ var phase1 = {
 		"Squats": {
 			sets: 5,
 			reps: 10,
+			calories: 20,
 			muscles: "glutes, quadriceps, hamstrings, calves",
 			instructions: "",
 		},
@@ -11,21 +12,25 @@ var phase1 = {
 		"Bent Over Rows": {
 			sets: 5,
 			reps: 10,
+			calories: 10
 		},
 
 		"Overhead Press": {
 			sets: 5,
 			reps: 10,
+			calories: 10
 		},
 
 		"External Rotations": {
 			sets: 5,
 			reps: 10,
+			calories: 10
 		},
 
 		"Seated Calf Raises": {
 			sets: 5,
 			reps: 10,
+			calories: 10
 		},
 	},
 
