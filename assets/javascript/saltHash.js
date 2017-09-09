@@ -1,85 +1,5 @@
 var map =
 {
-    "1": -1,
-    "2": 1,
-    "3": 2,
-    "4": -2,
-    "5": -3,
-    "6": 3,
-    "7": 4,
-    "8": -4,
-    "9": -5,
-    "0": 5,
-    "q": 6,
-    "w": -6,
-    "e": 7,
-    "r": -7,
-    "t": 8,
-    "y": -8,
-    "u": 10,
-    "i": -10,
-    "o": 11,
-    "p": -11,
-    "a": 12,
-    "s": -12,
-    "d": 13,
-    "f": -13,
-    "g": 14,
-    "h": -14,
-    "j": 15,
-    "k": -15,
-    "l": 16,
-    "z": -16,
-    "x": 17,
-    "c": -17,
-    "v": 18,
-    "b": -18,
-    "n": 19,
-    "m": -19,
-    "Q": 20,
-    "W": -20,
-    "E": 21,
-    "R": -21,
-    "T": 22,
-    "Y": -22,
-    "U": 23,
-    "I": -23,
-    "O": 24, 
-    "P": -24,
-    "A": 25,
-    "S": -25,
-    "D": 26,
-    "F": -26,
-    "G": 27,
-    "H": -27,
-    "J": 28,
-    "K": -28,
-    "L": 29,
-    "Z": -29,
-    "X": 30,
-    "C": -30,
-    "V": 31,
-    "B": -31,
-    "N": 32,
-    "M": -32,
-    "!": 33,
-    "@": -33,
-    "#": 34,
-    "$": -34,
-    "%": 35,
-    "^": -35,
-    "&": 36,
-    "*": -36,
-    "(": 37,
-    ")": -37,
-    "-": 38,
-    "_": -38,
-    "=": 39,
-    "+": -39
-}
-
-var map2 =
-{
     "q": 1,
     "w": math.complex(2,1),
     "1": math.complex(3,2),
@@ -178,7 +98,7 @@ var createHash = function(password, salt)
     var splitPassword = password.split('')
     var addSalt = []
     var hash = ""
-    var insert = Math.round(splitPassword.length/splitSalt.length)+1
+    var insert = Math.floor(splitPassword.length/splitSalt.length)+1
 
     for (var i=0; i<splitPassword.length; i++)
     {
@@ -207,5 +127,3 @@ var createHash = function(password, salt)
 
     return hash;
 }
-
-console.log(math.re(math.complex(1,2)))
