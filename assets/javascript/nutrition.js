@@ -33,6 +33,7 @@ database.ref("users").once("value", function(snap)
 			calDiv.html(userCals)
 			var progressPercent = userCals/calMax*100
 			progressBar.css('width', progressPercent+'%')
+			console.log(snap.val()[i].calsOverTime)
 		}
 	}
 })
@@ -55,13 +56,6 @@ database.ref("users").on('value', function(snap)
 		var progressPercent = currentCals/calMax*100
 		progressBar.css('width', progressPercent+'%')
 		calsOverTime.push(currentCals)
-
-		chart.load({
-	    columns: 
-		    [
-		        calsOverTime,
-		    ]
-		});
 	}
 })
 
@@ -95,32 +89,7 @@ var getFoodSearchResults = function()
 			var id = response.hits[i]._id
 			var brandName =  response.hits[i].fields.brand_name;
 			var cals = Math.round(response.hits[i].fields.nf_calories);
-			var newButton = $("<button class='food-picked'>"+name+": "+brandName+", ("+cals+")</button>");
-			newButton.attr('id', id)
-			foodsSearchResults.append(newButton)
-		}
-	});
-}
-
-var getExerciseSearchResults = function()
-{
-	//foodsSearchResults.empty()
-	search = $('#exercise-search').val().trim()
-
-	$.ajax({
-		url: "https://api.nutritionix.com/v2/natural/exercise/search/"+search+"?results=0:20&fields=*&appId="+nutAppID+"&appKey="+nutAppKey+"",
-		method: "GET"
-	}).done(function(response)
-	{	
-		console.log(response)
-
-		for (var i=0; i<response.hits.length; i++)
-		{
-			var name = response.hits[i].fields.item_name;
-			var id = response.hits[i]._id
-			var brandName =  response.hits[i].fields.brand_name;
-			var cals = Math.round(response.hits[i].fields.nf_calories);
-			var newButton = $("<button class='food-picked'>"+name+": "+brandName+", ("+cals+")</button>");
+			var newButton = $("<button class='btn btn-default food-picked'>"+name+": "+brandName+", ("+cals+")</button><br>");
 			newButton.attr('id', id)
 			foodsSearchResults.append(newButton)
 		}
@@ -138,6 +107,35 @@ $('#search').on('keypress', function(event)
 	{
 		getFoodSearchResults()
 	}
+})
+
+$('.cals-over-time').on('click', function(event)
+{
+	console.log(navigator.userAgent)
+
+	database.ref('users/'+userID).once('value', function(snap)
+	{
+		var calsArray = snap.val().calsOverTime
+
+		var chart = c3.generate(
+		{
+			bindto: '#chart',
+			data: 
+			{
+			    columns: [
+			    calsArray,
+			  ]
+			}
+		});
+
+
+/*		chart.load({
+	    columns: 
+		    [
+		        calsArray,
+		    ]
+		});*/
+	})
 })
 
 $(document).on('click', '.food-picked', function(event)
@@ -161,11 +159,14 @@ $(document).on('click', '.food-picked', function(event)
 			calsBefore = snap.val().calories;
 			var newCals = calsBefore + cals;
 
+			var tempCalsOverTime = snap.val().calsOverTime;
+			tempCalsOverTime.push(newCals)
+
 			database.ref("users/"+userID).update(
 			{
-				calories: newCals
+				calories: newCals,
+				calsOverTime: tempCalsOverTime
 			})
-
 		})
 	});
 });

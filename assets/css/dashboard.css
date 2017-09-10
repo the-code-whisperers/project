@@ -1,8 +1,8 @@
-/* body
+body
 {
   margin-top: 30px;
 }
-  */
+  
 .progress
 {
   height:50px;
@@ -41,22 +41,27 @@ input
 	margin: 0px;
 }
 
-#logo { 
-  color: #fff;
-  display: inline-block;
-  background: red; 
-  padding: 0px; 
-  text-decoration: none;
-  position: relative;
-  top: 0; right: 0; left: 0; bottom: 0;
-  padding: 0 2% 0 2%;
-  margin: 2% auto 2% auto;
-  text-align: center; 
-  font-family: Helvetica, Arial, sans-serif; 
-  font-weight: bold; 
-  font-style : italic;
-  font-size: 4em;
+.btn-danger 
+{
+    background-color: red;
+    color: #ffffff;
 }
+
+.btn-danger:hover, .btn-danger:focus, .btn-danger:active, .btn-danger.active, .open > .dropdown-toggle.btn-danger {
+    background:#d60000;
+}
+
+#foods-added
+{
+
+}
+
+#foods-search-result
+{
+  overflow: scroll;
+}
+
+
 
 /*fix for ipad and ipad pro*/
 

@@ -125,6 +125,8 @@ $('#create').on('click', function(event)
 
       if (validEmail)
       {
+        var calsOverTime = [0]
+
           database.ref('users').once('value', function(snap)
           {
             if (!snap.hasChild('0'))
@@ -142,6 +144,7 @@ $('#create').on('click', function(event)
                 weight: weight,
                 gender: gender,
                 calories: 0,
+                calsOverTime: calsOverTime,
                 token: token
               })
               window.location.href = 'dashboard.html';
@@ -176,6 +179,7 @@ $('#create').on('click', function(event)
                     weight: weight,
                     gender: gender,
                     calories: 0,
+                    calsOverTime: calsOverTime,
                     token: token
                   })
 
