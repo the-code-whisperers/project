@@ -11,6 +11,7 @@ var config =
 
 firebase.initializeApp(config);
 
+var calsOverTime = [0]
 var database = firebase.database()
 var token = sessionStorage.getItem("userID")
 var userID  = -1;
@@ -53,6 +54,14 @@ database.ref("users").on('value', function(snap)
 		calDiv.html(currentCals)
 		var progressPercent = currentCals/calMax*100
 		progressBar.css('width', progressPercent+'%')
+		calsOverTime.push(currentCals)
+
+		chart.load({
+	    columns: 
+		    [
+		        calsOverTime,
+		    ]
+		});
 	}
 })
 

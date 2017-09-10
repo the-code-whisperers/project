@@ -187,7 +187,7 @@ $('#create').on('click', function(event)
 
       else
       {
-          console.log("This is not a valid email address!")
+        $('#failed-to-register').show()
       }
   });
 })
