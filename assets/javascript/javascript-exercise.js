@@ -62,9 +62,13 @@ $(document).ready(function() {
       console.log(currentCaloriesPerRep*amountOfReps)
       newCalories = snap.val()[userID].calories - currentCaloriesPerRep*amountOfReps
 
+      var tempCalArray = snap.val()[userID].calsOverTime;
+      tempCalArray.push(newCalories)
+
       database.ref("users/"+userID).update(
       {
-        calories: newCalories
+        calories: newCalories,
+        calsOverTime: tempCalArray
       })
     })
 

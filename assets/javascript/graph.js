@@ -1,26 +1,9 @@
-
-
-var chart = c3.generate({
+var chart = c3.generate(
+{
     bindto: '#chart',
     data: {
       columns: [
-        calsOverTime,
+        [1,2,3,4,5,6],
       ]
     }
 });
-
-$("button").on('click', function(event)
-{
-	var r = Math.floor(Math.random()*80)
-
-	numbers.push(r)
-
-	console.log(r)
-
-	chart.load({
-	    columns: 
-	    [
-	        numbers,
-	    ]
-	});
-})
