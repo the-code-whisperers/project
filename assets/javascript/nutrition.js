@@ -59,7 +59,7 @@ else
 				{
 					posProgress.show()
 					negProgress.hide()
-					posProgress.css('width', progressPercent+'%')
+					posProgress.animate({'width': progressPercent+'%'})
 				}
 
 				else
@@ -67,7 +67,7 @@ else
 					negProgress.show()
 					posProgress.hide()
 					progressPercent = -1*progressPercent
-					negProgress.css('width', progressPercent+'%')
+					negProgress.animate({'width': progressPercent+'%'})
 				}
 			}
 		}
@@ -95,7 +95,7 @@ else
 			{
 				posProgress.show()
 				negProgress.hide()
-				posProgress.css('width', progressPercent+'%')
+				posProgress.animate({'width': progressPercent+'%'})
 			}
 
 			else
@@ -103,7 +103,7 @@ else
 				negProgress.show()
 				posProgress.hide()
 				progressPercent = -1*progressPercent
-				negProgress.css('width', progressPercent+'%')
+				negProgress.animate({'width': progressPercent+'%'})
 			}
 
 			calsOverTime.push(currentCals)
