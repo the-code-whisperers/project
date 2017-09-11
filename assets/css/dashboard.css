@@ -1,8 +1,8 @@
-/* body
+body
 {
   margin-top: 30px;
 }
-  */
+  
 .progress
 {
   height:50px;
@@ -35,28 +35,61 @@ input
 	width:80%;
 }
 
+
 .panel{
 	background: rgba(230, 230, 230, 0.5);
 	
 	margin: 0px;
 }
 
-#logo { 
-  color: #fff;
-  display: inline-block;
-  background: red; 
-  padding: 0px; 
-  text-decoration: none;
-  position: relative;
-  top: 0; right: 0; left: 0; bottom: 0;
-  padding: 0 2% 0 2%;
-  margin: 2% auto 2% auto;
-  text-align: center; 
-  font-family: Helvetica, Arial, sans-serif; 
-  font-weight: bold; 
-  font-style : italic;
-  font-size: 4em;
+.btn-danger 
+{
+    background-color: red;
+    color: #ffffff;
 }
+
+.btn-danger:hover, .btn-danger:focus, .btn-danger:active, .btn-danger.active, .open > .dropdown-toggle.btn-danger {
+    background:#d60000;
+}
+
+#foods-added
+{
+
+}
+
+#foods-search-result
+{
+  overflow: scroll;
+}
+
+#progress-container
+{
+  position: relative;
+  width:100%;
+  border: 1px solid black;
+  height: 40px;
+}
+
+#pos-progress
+{
+  background-color: green;
+  position: absolute;
+  width: 0%;
+  height: 40px;
+  left:50%;
+}
+
+#neg-progress
+{
+  background-color: red;
+  position: absolute;
+  width: 0%;
+  height: 40px;
+  left:50%;
+  transform: translateX(-100%);
+}
+
+
 
 /*fix for ipad and ipad pro*/
 

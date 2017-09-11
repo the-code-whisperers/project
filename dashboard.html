@@ -4,7 +4,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-	<title>Project</title>
+	<title>DashBoard</title>
 </head>
 <body>
 	<div class="container">
@@ -13,17 +13,34 @@
 
 			<div class="col-md-3 text-center">
 				<h1 id="user-name"></h1>
+				<button class= "btn btn-primary" id="new-day">New Day</button>
 			</div>
 
 			<div class="col-md-6 text-center">
 				<div id="logo">HealthDash</div>
-				<h1 id="cals">0</h1>
+				<h1>Net Calories<span><div id="cals">0</div></span></h1>
 			</div>
 
-			<div class="col-md-3 text-center">
+			<div class="col-md-2 text-center">
+				<h4>How You're Doing Today</h4>
+				<button class= "btn btn-primary cals-over-time" data-toggle="modal" id="register">Today's Progress</button>
 			</div>
 		</div>
 		
+
+		<div class="row">
+			<div class="col-md-12">
+				<div id="progress-container">
+					<div id="pos-progress">
+					</div>
+
+					<div id="neg-progress">
+					</div>
+				</div>
+			</div>
+		</div>
+
+
 		<div class="row">
 			<div class="col-md-12">
 				<div class="progress">
@@ -34,23 +51,26 @@
 		</div>
 
 		<div class="row">
-			<div class="col-md-6">
-				<input placeholder="What did you eat today?" id="search"></input>
-				<button id="button">Add</button>
-			</div>
+			<div class="col-md-12">
 
-			<div class="col-md-6">
-				<div class="container-fluid">
-			    
-					<div class="panel panel-primary">
-						<div class="panel-heading text-center">My Workout</div>
-					 	<div class="panel-body text-center" id="exercises"></div>
-					 	<div class="panel-body" id="exercise-info">
-					 		<div class="row">
-					 			<div class="col-md-6" id="exercise-instructions">
-						 			<div class="pre-scrollable" id="search-results"></div>
-						 		</div>
-					 			<div class="col-md-6" id="exercise-progress"></div>
+				<div class="panel panel-primary">
+					<div class="panel-heading text-center">
+						<h4>My Foods Today</h4>
+					</div>
+					<div class="panel-body text-center">
+					</div>
+					<div class="panel-body">
+					 	<div class="row">
+					 		<div class="col-md-6">
+								<input placeholder="What did you eat today?" class="form-control" id="search"></input>
+								<button class= "btn btn-primary" id="button">Search Food</button>
+								<div id="foods-search-result">
+								</div>
+						 	</div>
+					 		<div class="col-md-6">
+					 			<div id="foods-added">
+					 			</div>
+					 		</div>
 					 	</div>
 					</div>
 				</div>
@@ -58,18 +78,55 @@
 		</div>
 
 		<div class="row">
-			<div class="col-md-6">
-				<div id="foods-search-result">
+			<div class="col-md-12">
+				<div class="panel panel-primary">
+					<div class="panel-heading text-center">
+						<h4>My Workout Today</h4>
+					</div>
+					<div class="panel-body text-center" id="exercises">
+					</div>
+					<div class="panel-body" id="exercise-info">
+					 	<div class="row">
+					 		<div class="col-md-6" id="exercise-instructions">
+						 		<div class="pre-scrollable" id="search-results"></div>
+						 	</div>
+					 		<div class="col-md-6" id="exercise-progress">
+					 		</div>
+					 	</div>
+					</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="row">
-			<div class="col-md-6">
-				<div id="foods-added">
+	</div>
+
+
+
+
+	<!-- Modal -->
+	<div class="modal fade" id="chartModal" role="dialog">
+	    <div class="modal-dialog">
+	    
+		    <!-- Modal content-->
+		    <div class="modal-content">
+			    <div class="modal-header">
+				    <button type="button" class="close" data-dismiss="modal">&times;</button>
+				    <h4 class="modal-title">Your Net Calories Today</h4>
 				</div>
-			</div>
-		</div>
+
+		        <div class="modal-body">
+
+					<div class="panel panel-body" id="chartDIV">
+						<div id="chart"></div>
+					</div>
+
+			    </div>
+
+	        	<div class="modal-footer">
+	          		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        	</div>
+	    	</div>
+	    </div>
 	</div>
 
 	
@@ -77,11 +134,15 @@
 
 	<script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="assets/javascript/phase1.js"></script>
+	<script src="assets/c3-0.4.16/d3.v3.min.js" charset="utf-8"></script>
+	<script src="assets/c3-0.4.16/c3.min.js"></script>
+	<link href="assets/c3-0.4.16/c3.css" rel="stylesheet">
 	<script type="text/javascript" src="assets/javascript/nutrition.js"></script>
 	<link href="assets/css/style-exercise.css" rel="stylesheet" />
 	<script src="assets/javascript/javascript-exercise.js"></script>
-<!-- 	<script type="text/javascript" src="assets/javascript/firebase.js"></script> -->
+	<script src="assets/javascript/graph.js"></script>
 	<link href="assets/css/login.css" rel="stylesheet" />
 	<link href="assets/css/dashboard.css" rel="stylesheet" />
 
