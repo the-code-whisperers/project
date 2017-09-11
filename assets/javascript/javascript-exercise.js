@@ -15,6 +15,55 @@ $(document).ready(function() {
     };
   };
 
+  var getRequest = function(searchTerm) {
+
+    var searchParams = {
+      
+      part: 'snippet',
+
+      key: 'AIzaSyD7beeskMiAH3aGuOyURD06SuubXkNHmx8',
+
+      maxResults: 10,
+
+      q: searchTerm,
+
+
+    }
+
+    url='https://www.googleapis.com/youtube/v3/search'
+
+    $.getJSON(url, searchParams, function(data) {
+
+      var resultsArray = data.items;
+      console.log(resultsArray);
+
+      showResults(resultsArray);
+    })
+  }
+
+
+  var showResults = function(results) {
+    var html = ""
+
+    $.each(results, function (key, item) {
+
+        console.log(key);
+        console.log(item);
+        var imgs = item.snippet.thumbnails.high.url;
+        var title = item.snippet.title;
+        var videoId = item.id.videoId;
+        var channelId = item.snippet.channelId;
+        var channelName = item.snippet.channelTitle;
+        var videoURL = "https://www.youtube.com/watch?v=" + videoId
+        
+        html = '<div>' + '<div>' + title + '</div>' + '<a href="https://www.youtube.com/watch?v=' + videoId + '"><img src="' + imgs + '" title="' + title + '"class= img-responsive' + '></a><div class="moreVidsFromCreator"><a href="https://www.youtube.com/channel/' + channelId + '" title="See more videos by ' + channelName + '">More videos by ' + channelName + '</a></div>' + '</div>';
+        
+        $('#search-results').append(html);
+
+    })
+  }
+
+
   var colorRepProgress = function(id, width) {
     $("#"+id).css("background", "linear-gradient(to right, #4682B4 0%, #4682B4 "+ (width*10)+"%, #d3d3d3 "+(width*10)+"%, #d3d3d3 100%");
   };
@@ -22,6 +71,16 @@ $(document).ready(function() {
   populateTodayExercise();
 
   $("#exercises").on("click", function getExerciseInfo(event) {
+    
+    currentWorkout = event.target.id
+
+    $('#search-results').empty();
+
+    searchTerm = currentWorkout;
+
+    getRequest(searchTerm);
+
+
     if (event.target.className === "btn btn-primary") {
       $("#exercise-progress").empty();
       workoutLog.exercise = "";
