@@ -1,9 +1,9 @@
-/*var chart = c3.generate(
+var chart = c3.generate(
 {
     bindto: '#chart',
     data: {
       columns: [
-        calsOverTime,
+        [1,2,3,4,5,6],
       ]
     }
-});*/
+});

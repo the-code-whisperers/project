@@ -109,32 +109,41 @@ $('#search').on('keypress', function(event)
 	}
 })
 
+/*$('#chartModal').modal("show").on('shown', function(event)
+{ 
+    console.log(event)
+});*/
+
 $('.cals-over-time').on('click', function(event)
 {
-	console.log(navigator.userAgent)
 
-	database.ref('users/'+userID).once('value', function(snap)
+	$('#chartModal').modal("show").on('shown.bs.modal', function(event)
 	{
-		var calsArray = snap.val().calsOverTime
 
-		var chart = c3.generate(
+		database.ref('users/'+userID).once('value', function(snap)
 		{
-			bindto: '#chart',
-			data: 
+			var calsArray = snap.val().calsOverTime
+
+			var chart = c3.generate(
 			{
-			    columns: [
-			    calsArray,
-			  ]
-			}
-		});
+				bindto: '#chart',
+				data: 
+				{
+				    columns: [
+				    calsArray,
+				  ]
+				}
+			});
 
 
-/*		chart.load({
-	    columns: 
-		    [
-		        calsArray,
-		    ]
-		});*/
+	/*		chart.load({
+		    columns: 
+			    [
+			        calsArray,
+			    ]
+			});*/
+		})
+
 	})
 })
 
