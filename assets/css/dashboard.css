@@ -62,6 +62,33 @@ input
   overflow: scroll;
 }
 
+#progress-container
+{
+  position: relative;
+  width:100%;
+  border: 1px solid black;
+  height: 40px;
+}
+
+#pos-progress
+{
+  background-color: green;
+  position: absolute;
+  width: 0%;
+  height: 40px;
+  left:50%;
+}
+
+#neg-progress
+{
+  background-color: red;
+  position: absolute;
+  width: 0%;
+  height: 40px;
+  left:50%;
+  transform: translateX(-100%);
+}
+
 
 
 /*fix for ipad and ipad pro*/
