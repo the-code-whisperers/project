@@ -60,7 +60,10 @@ input
   display: none;
 }
 
-
+#failed-to-register
+{
+  display: none;
+}
 /*fix for ipad and ipad pro*/
 
 @media only screen and (min-height: 800px) {

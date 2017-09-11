@@ -16,31 +16,54 @@ var database = firebase.database()
 var loginFailed = $('#login-failed')
 var failedMessage = $('#failed-message')
 
+var createToken = function()
+{
+    var chars = ["1","2","3","4","5","6","7","8","9","0","q","w","e","r","t","y","u","i","o","p","a","s","d","f","g","h","j","k","l","z","x","c","v","b","n","m"]
+    var token = ""
+
+    for (var i=0; i<10; i++)
+    {
+        var r = Math.floor(Math.random() * chars.length);
+        token = token+chars[r]
+    }
+
+    return token;
+}
 
 $('#login').on('click', function(event)
 {
-    console.log("hi!")
     var email = $('#email').val().trim()
     var password = $('#password').val().trim()
     var correctEmail = false
     var correctPassword = false
     var loggedIn = false
 
-
     database.ref('users').once('value', function(snap)
     {
-        console.log(snap.val())
-        console.log(snap.val().length)
-
         for (var i=0; i<snap.val().length; i++)
         {
-            if (snap.val()[i].email === email && snap.val()[i].password === password)
+            if (snap.val()[i].email === email)
             {
-                alert("You're logged in as "+snap.val()[i].name)
-                correctEmail = true
-                correctPassword = true
-                loggedIn = true
-                break;
+                var userSalt = snap.val()[i].salt;
+                var userHash = snap.val()[i].hash;
+                var createdHash = createHash(password, userSalt)
+
+                if (createdHash === userHash)
+                {
+                  correctEmail = true
+                  correctPassword = true
+                  loggedIn = true
+                  var token = createToken()
+                  sessionStorage.setItem("userID", token);
+
+                  database.ref("users/"+i).update(
+                  {
+                      token: token
+                  })
+
+                  window.location.href = 'dashboard.html';
+                  break;
+                }
             }
 
             if (snap.val()[i].email === email && snap.val()[i].password !== password)
@@ -89,73 +112,88 @@ $('#create').on('click', function(event)
   var weight = $('#new-weight').val().trim()
   var gender = $('#new-gender').val().trim()
 
-  database.ref('users').once('value', function(snap)
-  {
-    if (!snap.hasChild('0'))
-    {
-      database.ref('users/0').set(
+  var salt = createSalt()
+  var hash = createHash(password, salt)
+
+  $.ajax({
+      url: "https://apilayer.net/api/check?access_key=ecd139f85be6b1d868b48ce6f827bed9&email="+email+"",
+      method: "GET"
+  }).done(function(response)
+  { 
+      var validEmail = response.format_valid
+      console.log("This is a valid email: "+validEmail)
+
+      if (validEmail)
       {
-        name: name,
-        email: email,
-        password: password,
-        age: age,
-        height: height,
-        weight: weight,
-        gender: gender,
-        calories: 0
-      })
-    }
+        var calsOverTime = [0]
 
-    else
-    {
-      var newEmail = true;
-      for (var i=0; i<snap.val().length; i++)
-      {
-        if (email === snap.val()[i].email)
-        {
-          newEmail = false;
-          console.log("This email is already taken!")
-        }
-      }
-
-      if (newEmail)
-      {
-        var splitEmail = email.split('')
-        var validEmail = false
-
-        for (var i=0; i<splitEmail.length; i++)
-        {
-
-          if (splitEmail[i] === '@')
+          database.ref('users').once('value', function(snap)
           {
-              validEmail = true
-          }
-        }
-
-        if (validEmail)
-        {
-            var userID = snap.val().length
-            database.ref('users/'+userID).set(
+            if (!snap.hasChild('0'))
             {
-              name: name,
-              email: email,
-              password: password,
-              age: age,
-              height: height,
-              weight: weight,
-              gender: gender,
-              calories: 0
-            })
-        }
+              var token = createToken()
+              sessionStorage.setItem("userID", token);
+              database.ref('users/0').set(
+              {
+                name: name,
+                email: email,
+                salt: salt,
+                hash: hash,
+                age: age,
+                height: height,
+                weight: weight,
+                gender: gender,
+                calories: 0,
+                calsOverTime: calsOverTime,
+                token: token
+              })
+              window.location.href = 'dashboard.html';
+            }
 
-        else
-        {
-          $('.form-contorl #new-email').css("border", "1px, solid red")
-            console.log("This is not a valid Email!")
-        }
+            else
+            {
+              var newEmail = true;
+
+              for (var i=0; i<snap.val().length; i++)
+              {
+                if (email === snap.val()[i].email)
+                {
+                  newEmail = false;
+                  console.log("This email is already taken!")
+                }
+              }
+
+              if (newEmail)
+              {
+                  var userID = snap.val().length
+                  var token = createToken()
+                  sessionStorage.setItem("userID", token);
+                  database.ref('users/'+userID).set(
+                  {
+                    name: name,
+                    email: email,
+                    salt: salt,
+                    hash: hash,
+                    age: age,
+                    height: height,
+                    weight: weight,
+                    gender: gender,
+                    calories: 0,
+                    calsOverTime: calsOverTime,
+                    token: token
+                  })
+
+                  window.location.href = 'dashboard.html';
+              }
+            } 
+        })
       }
-    }  
-  })
+
+      else
+      {
+        $('#failed-to-register').show()
+      }
+  });
 })
 
 
