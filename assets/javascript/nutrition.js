@@ -109,6 +109,17 @@ $('#search').on('keypress', function(event)
 	}
 })
 
+$('#new-day').on('click', function(event)
+{
+	var calarray = [0]
+
+	database.ref("users/"+userID).update(
+	{
+		calories: 0,
+		calsOverTime: calarray
+	})
+})
+
 /*$('#chartModal').modal("show").on('shown', function(event)
 { 
     console.log(event)
