@@ -60,6 +60,7 @@ input
 #foods-search-result
 {
   overflow: scroll;
+  height: 480px;
 }
 
 #progress-container
