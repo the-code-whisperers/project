@@ -59,7 +59,7 @@ else
 				{
 					posProgress.show()
 					negProgress.hide()
-					posProgress.css('width', progressPercent+'%')
+					posProgress.animate({'width': progressPercent+'%'})
 				}
 
 				else
@@ -67,7 +67,7 @@ else
 					negProgress.show()
 					posProgress.hide()
 					progressPercent = -1*progressPercent
-					negProgress.css('width', progressPercent+'%')
+					negProgress.animate({'width': progressPercent+'%'})
 				}
 			}
 		}
@@ -95,7 +95,7 @@ else
 			{
 				posProgress.show()
 				negProgress.hide()
-				posProgress.css('width', progressPercent+'%')
+				posProgress.animate({'width': progressPercent+'%'})
 			}
 
 			else
@@ -103,7 +103,7 @@ else
 				negProgress.show()
 				posProgress.hide()
 				progressPercent = -1*progressPercent
-				negProgress.css('width', progressPercent+'%')
+				negProgress.animate({'width': progressPercent+'%'})
 			}
 
 			calsOverTime.push(currentCals)
@@ -116,7 +116,7 @@ else
 
 	//"https://api.nutritionix.com/v1_1/search/"+search+"?results=0:20&fields=*&appId="+nutAppID+"&appKey="+nutAppKey+"",
 	//test id: "51d37a92cc9bff5553aa9f36"
-	var calMax = 3000;
+	var calMax = 6000;
 	var foodsSearchResults = $('#foods-search-result')
 
 	console.log(userID)

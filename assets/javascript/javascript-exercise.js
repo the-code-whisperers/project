@@ -2,8 +2,10 @@ $(document).ready(function() {
 
   var workoutLog = {
     exercise: "",
-    setsAndReps: {}
+    setsAndReps: []
   };
+
+  var repsArray = []
 
   var populateTodayExercise = function() {
     for (var x in phase1.day1) {
@@ -71,18 +73,17 @@ $(document).ready(function() {
   populateTodayExercise();
 
   $("#exercises").on("click", function getExerciseInfo(event) {
-    
-    currentWorkout = event.target.id
 
-    $('#search-results').empty();
-
-    searchTerm = currentWorkout;
-
-    getRequest(searchTerm);
 
 
     if (event.target.className === "btn btn-primary") {
       $("#exercise-progress").empty();
+      $('#search-results').empty();
+      repsArray = []
+      currentWorkout = event.target.id
+      searchTerm = currentWorkout;
+
+      getRequest(searchTerm);
       workoutLog.exercise = "";
       workoutLog.setsAndReps = {};      
       var selectedExercise = event.target.id;
@@ -92,7 +93,7 @@ $(document).ready(function() {
         $("#exercise-progress").append(
           "<p><span class='label label-primary label-text'>Set "+(i+1)+"</span>"+
           "<span class='label label-info label-text'>Reps: <span id='rep-counter-"+(i+1)+"'>0</span></span>"+
-          "<span class='label label-warning label-text pull-right'><label class='checkbox-inline'><input type='checkbox' class='checkbox !checked' id='checkbox-"+(i+1)+"'><b>Completed set?</label></span></p>"+
+          "<label class='checkbox-inline pull-right'><input type='checkbox' class='checkbox !checked' id='checkbox-"+(i+1)+"'></label><span class='label label-warning label-text pull-right'><b>Completed set? &nbsp</b></span>"+
           "<p><input type='range' min='0' max='"+numReps+"' value='0' class='slider' id='"+(i+1)+"'></p><br>"
         );     
       };
@@ -117,7 +118,9 @@ $(document).ready(function() {
       $("#"+setNumber).attr("class", "slider-done");
       document.getElementById(setNumber).disabled = true;
       var repsCompleted = $("#rep-counter-"+setNumber).html();
-      workoutLog.setsAndReps["Set "+setNumber] = repsCompleted;
+      var intRepsCompleted = parseInt(repsCompleted)
+      repsArray.push(intRepsCompleted)
+      workoutLog.setsAndReps[setNumber-1] = repsCompleted;
     } else if ($("#"+checkboxID).attr("class") === "checkbox checked") {
         $("#"+checkboxID).attr("class", "checkbox !checked");
         $("#"+setNumber).attr("class", "slider");
@@ -127,8 +130,39 @@ $(document).ready(function() {
   });
 
   $(document).on("click", "#done", function(event) {
-    console.log(workoutLog);
-    //Export to firebase.
+    console.log(workoutLog.setsAndReps[0]);
+    console.log(workoutLog.setsAndReps)
+    console.log(repsArray)
+    console.log(phase1.day1[currentWorkout].calories)
+    var totalReps = 0;
+
+
+    for (var i=0; i<repsArray.length; i++)
+    {
+      totalReps = totalReps + repsArray[i]
+    }
+
+    var oldCals = 0;
+
+
+    database.ref("users/"+userID).once("value", function(snap)
+    {
+      oldCals = snap.val().calories
+      var oldCalArray = snap.val().calsOverTime
+      console.log("old cals "+oldCals)
+      console.log("old cals Array "+oldCalArray)
+
+      var newCals = oldCals - totalReps*phase1.day1[currentWorkout].calories
+      oldCalArray.push(newCals)
+
+      database.ref("users/"+userID).update(
+      {
+        calories: newCals,
+        calsOverTime: oldCalArray
+      })
+    })
+
+    repsArray = []
   });
 
 });
