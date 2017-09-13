@@ -7,6 +7,7 @@ body
 {
   height:50px;
 }
+
 #container {
   overflow: hidden;
   height: 800px;
@@ -30,11 +31,11 @@ video {
   transform: translate(-50%, -50%);
 }
 
-input
+/*input
 {
 	width:80%;
 }
-
+*/
 
 .panel{
 	background: rgba(230, 230, 230, 0.5);
@@ -59,7 +60,9 @@ input
 
 #foods-search-result
 {
+  display:none;
   overflow: scroll;
+  height: 480px;
 }
 
 #progress-container
@@ -68,6 +71,8 @@ input
   width:100%;
   border: 1px solid black;
   height: 40px;
+  margin-bottom:30px;
+  overflow: hidden;
 }
 
 #pos-progress
@@ -75,8 +80,9 @@ input
   background-color: green;
   position: absolute;
   width: 0%;
-  height: 40px;
+  height: 38px;
   left:50%;
+  overflow: hidden;
 }
 
 #neg-progress
@@ -84,12 +90,85 @@ input
   background-color: red;
   position: absolute;
   width: 0%;
-  height: 40px;
+  height: 38px;
   left:50%;
   transform: translateX(-100%);
+  overflow:hidden;
 }
 
+#food-body
+{
+  display: none;
+}
 
+#work-out-body
+{
+  display: none;
+}
+
+#food-hover:hover
+{
+  background-color: #4b9add;
+  box-shadow: 0px 10px 5px grey;
+}
+
+#work-out-hover:hover
+{
+  background-color: #4b9add;
+  box-shadow: 0px 10px 5px grey;
+}
+
+.row
+{
+    margin-bottom: 30px;
+}
+
+.containerYT {
+  position: relative;
+  width: 75%;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin-bottom: 3%;
+}
+
+.img-responsive{
+    position: relative;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.overlayYT {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: #337ab7;
+}
+
+.containerYT:hover .overlayYT {
+  opacity: 1;
+}
+
+.textYT {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
 
 /*fix for ipad and ipad pro*/
 

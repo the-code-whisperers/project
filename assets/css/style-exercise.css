@@ -55,8 +55,22 @@
     cursor: pointer; 
 }
 
+.checkbox-pointer {
+    cursor: pointer;
+}
+
 .label-text {
     display: inline;
     font-size: 15px;
     margin-right: 5px;
 };
+
+#work-out-hover:hover
+{
+  background-color: red;
+}
+
+.panel .panel-primary
+{
+    margin-bottom: 30px;
+}

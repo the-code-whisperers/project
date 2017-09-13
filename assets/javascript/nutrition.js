@@ -21,18 +21,21 @@ var calDiv = $('#cals')
 var progressBar = $('.progress-bar')
 var posProgress = $('#pos-progress')
 var negProgress = $('#neg-progress')
+var foodShown = false
+var workOutShown = false
 
 console.log(token)
 
 if (token === null)
 {
-	var login = $("<a href = 'login.html'></a>")
+	var login = $("<a href = 'index.html'></a>")
+	$('#logout').hide()
 	$('#user-name').html("Login Here")
 	$("#new-day").html("Login")
 
 	$("#new-day").on("click", function()
 	{
-		window.location.href = 'login.html';
+		window.location.href = 'index.html';
 	})
 	//login.append($("#user-name"))
 }
@@ -59,7 +62,7 @@ else
 				{
 					posProgress.show()
 					negProgress.hide()
-					posProgress.css('width', progressPercent+'%')
+					posProgress.animate({'width': progressPercent+'%'})
 				}
 
 				else
@@ -67,7 +70,7 @@ else
 					negProgress.show()
 					posProgress.hide()
 					progressPercent = -1*progressPercent
-					negProgress.css('width', progressPercent+'%')
+					negProgress.animate({'width': progressPercent+'%'})
 				}
 			}
 		}
@@ -95,7 +98,7 @@ else
 			{
 				posProgress.show()
 				negProgress.hide()
-				posProgress.css('width', progressPercent+'%')
+				posProgress.animate({'width': progressPercent+'%'})
 			}
 
 			else
@@ -103,7 +106,7 @@ else
 				negProgress.show()
 				posProgress.hide()
 				progressPercent = -1*progressPercent
-				negProgress.css('width', progressPercent+'%')
+				negProgress.animate({'width': progressPercent+'%'})
 			}
 
 			calsOverTime.push(currentCals)
@@ -116,7 +119,7 @@ else
 
 	//"https://api.nutritionix.com/v1_1/search/"+search+"?results=0:20&fields=*&appId="+nutAppID+"&appKey="+nutAppKey+"",
 	//test id: "51d37a92cc9bff5553aa9f36"
-	var calMax = 3000;
+	var calMax = 6000;
 	var foodsSearchResults = $('#foods-search-result')
 
 	console.log(userID)
@@ -132,6 +135,7 @@ else
 		}).done(function(response)
 		{	
 			console.log(response.hits)
+			$('#foods-search-result').show()
 
 			for (var i=0; i<response.hits.length; i++)
 			{
@@ -145,6 +149,46 @@ else
 			}
 		});
 	}
+
+	$('#food-hover').on('click', function(event)
+	{
+		if (foodShown)
+		{
+			$('#food-body').slideUp()
+			foodShown = false;
+		}
+
+		else if (!foodShown)
+		{
+			$('#food-body').slideDown()
+			foodShown = true;
+		}
+	})
+
+	$('#work-out-hover').on('click', function(event)
+	{
+		if (workOutShown)
+		{
+			$('#work-out-body').slideUp()
+			workOutShown = false;
+		}
+
+		else if (!workOutShown)
+		{
+			$('#work-out-body').slideDown()
+			workOutShown = true;
+		}
+	})
+
+/*	$('#food-panel').hover(function()
+	{
+		$('#food-body').show();
+
+	}, 
+		function()
+		{
+			$('#food-body').hide()
+	})*/
 
 	$('#button').on('click', function(event)
 	{
@@ -161,6 +205,14 @@ else
 
 	$('#new-day').on('click', function(event)
 	{
+		
+		$('#exercise-progress').empty();
+		$('#exercise-instructions').hide();
+		$('#foods-search-result').hide();
+		$('#foods-added').empty();
+		$('#search').val("");
+		$("#done-button-container").empty();
+
 		var calarray = [0]
 
 		database.ref("users/"+userID).update(
@@ -168,6 +220,12 @@ else
 			calories: 0,
 			calsOverTime: calarray
 		})
+	})
+
+	$('#logout').on('click', function(event)
+	{
+		sessionStorage.clear();
+		window.location.href = 'index.html';
 	})
 
 	/*$('#chartModal').modal("show").on('shown', function(event)
