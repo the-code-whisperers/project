@@ -58,7 +58,7 @@ $(document).ready(function() {
         var channelName = item.snippet.channelTitle;
         var videoURL = "https://www.youtube.com/watch?v=" + videoId;
         
-        html = '<a href="https://www.youtube.com/watch?v=' + videoId + '" target="_blank"><div class = "containerYT"><img src="' + imgs + '" title="' + title + '"class= img-responsive' + '>' + '<div class = "overlayYT">' + '<div class = "textYT">' + title + '</div>' + '</div>' + '</div></a>';
+        html = '<a href="https://www.youtube.com/watch?v=' + videoId + '" target="_blank"><div class = "containerYT"><img src="' + imgs + '" class= img-responsive' + '>' + '<div class = "overlayYT">' + '<div class = "textYT">' + title + '</div>' + '</div>' + '</div></a>';
         
         $('#search-results').append(html);
         $('#search-results').attr('href', 'videoId')
