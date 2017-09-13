@@ -14,6 +14,7 @@
 			<div class="col-md-3 text-center">
 				<h1 id="user-name"></h1>
 				<button class= "btn btn-primary" id="new-day">New Day</button>
+				<button class= "btn btn-primary" id="logout">Logout</button>
 			</div>
 
 			<div class="col-md-6 text-center">
@@ -41,37 +42,39 @@
 		</div>
 
 
-		<div class="row">
-			<div class="col-md-12">
-				<div class="progress">
-					<div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-					</div>
-				</div>
+<!-- 		<div class="row">
+	<div class="col-md-12">
+		<div class="progress">
+			<div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
 			</div>
 		</div>
+	</div>
+</div> -->
 
 		<div class="row">
 			<div class="col-md-12">
 
-				<div class="panel panel-primary">
-					<div class="panel-heading text-center">
+				<div class="panel panel-primary" id="food-panel">
+					<div class="panel-heading text-center" id="food-hover">
 						<h4>My Foods Today</h4>
 					</div>
-					<div class="panel-body text-center">
-					</div>
-					<div class="panel-body">
-					 	<div class="row">
-					 		<div class="col-md-6">
-								<input placeholder="What did you eat today?" class="form-control" id="search"></input>
-								<button class= "btn btn-primary" id="button">Search Food</button>
-								<div id="foods-search-result">
-								</div>
+					<div id="food-body">
+						<div class="panel-body text-center">
+						</div>
+						<div class="panel-body">
+						 	<div class="row">
+						 		<div class="col-md-6">
+									<input placeholder="What did you eat today?" class="form-control" id="search"></input>
+									<button class= "btn btn-primary" id="button">Search Food</button>
+									<div id="foods-search-result">
+									</div>
+							 	</div>
+						 		<div class="col-md-6">
+						 			<div id="foods-added">
+						 			</div>
+						 		</div>
 						 	</div>
-					 		<div class="col-md-6">
-					 			<div id="foods-added">
-					 			</div>
-					 		</div>
-					 	</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -80,30 +83,26 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="panel panel-primary">
-					<div class="panel-heading text-center">
+					<div class="panel-heading text-center" id="work-out-hover">
 						<h4>My Workout Today</h4>
 					</div>
-					<div class="panel-body text-center" id="exercises">
-					</div>
-					<div class="panel-body" id="exercise-info">
-					 	<div class="row">
-					 		<div class="col-md-6" id="exercise-instructions">
-						 		<div id="instructions"></div>
-						 		<div id="video"></div>
+					<div id="work-out-body">
+						<div class="panel-body text-center" id="exercises">
+						</div>
+						<div class="panel-body" id="exercise-info">
+						 	<div class="row">
+						 		<div class="col-md-6" id="exercise-instructions">
+							 		<div class="pre-scrollable" id="search-results"></div>
+							 	</div>
+						 		<div class="col-md-6" id="exercise-progress">
+						 		</div>
 						 	</div>
-					 		<div class="col-md-6" id="exercise-progress">
-					 		</div>
-					 	</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
-	</div>
-
-
-
-
+	
 	<!-- Modal -->
 	<div class="modal fade" id="chartModal" role="dialog">
 	    <div class="modal-dialog">

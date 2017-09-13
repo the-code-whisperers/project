@@ -7,6 +7,7 @@ body
 {
   height:50px;
 }
+
 #container {
   overflow: hidden;
   height: 800px;
@@ -59,7 +60,9 @@ input
 
 #foods-search-result
 {
+  display:none;
   overflow: scroll;
+  height: 480px;
 }
 
 #progress-container
@@ -68,6 +71,8 @@ input
   width:100%;
   border: 1px solid black;
   height: 40px;
+  margin-bottom:30px;
+  overflow: hidden;
 }
 
 #pos-progress
@@ -75,8 +80,9 @@ input
   background-color: green;
   position: absolute;
   width: 0%;
-  height: 40px;
+  height: 38px;
   left:50%;
+  overflow: hidden;
 }
 
 #neg-progress
@@ -84,12 +90,38 @@ input
   background-color: red;
   position: absolute;
   width: 0%;
-  height: 40px;
+  height: 38px;
   left:50%;
   transform: translateX(-100%);
+  overflow:hidden;
 }
 
+#food-body
+{
+  display: none;
+}
 
+#work-out-body
+{
+  display: none;
+}
+
+#food-hover:hover
+{
+  background-color: #4b9add;
+  box-shadow: 0px 10px 5px grey;
+}
+
+#work-out-hover:hover
+{
+  background-color: #4b9add;
+  box-shadow: 0px 10px 5px grey;
+}
+
+.row
+{
+    margin-bottom: 30px;
+}
 
 /*fix for ipad and ipad pro*/
 

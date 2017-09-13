@@ -1,8 +1,11 @@
 $(document).ready(function() {
 
-  var currentWorkout = "";
-  var currentCaloriesPerRep = 0;
-  var currentSet = "";
+  var workoutLog = {
+    exercise: "",
+    setsAndReps: []
+  };
+
+  var repsArray = []
 
   var populateTodayExercise = function() {
     for (var x in phase1.day1) {
@@ -13,66 +16,153 @@ $(document).ready(function() {
         $("#exercises").append(exerciseDiv);
     };
   };
+
+  var getRequest = function(searchTerm) {
+
+    var searchParams = {
+      
+      part: 'snippet',
+
+      key: 'AIzaSyD7beeskMiAH3aGuOyURD06SuubXkNHmx8',
+
+      maxResults: 10,
+
+      q: searchTerm,
+
+
+    }
+
+    url='https://www.googleapis.com/youtube/v3/search'
+
+    $.getJSON(url, searchParams, function(data) {
+
+      var resultsArray = data.items;
+      console.log(resultsArray);
+
+      showResults(resultsArray);
+    })
+  }
+
+
+  var showResults = function(results) {
+    var html = ""
+
+    $.each(results, function (key, item) {
+
+        console.log(key);
+        console.log(item);
+        var imgs = item.snippet.thumbnails.high.url;
+        var title = item.snippet.title;
+        var videoId = item.id.videoId;
+        var channelId = item.snippet.channelId;
+        var channelName = item.snippet.channelTitle;
+        var videoURL = "https://www.youtube.com/watch?v=" + videoId
+        
+        html = '<div>' + '<div>' + title + '</div>' + '<a href="https://www.youtube.com/watch?v=' + videoId + '"><img src="' + imgs + '" title="' + title + '"class= img-responsive' + '></a><div class="moreVidsFromCreator"><a href="https://www.youtube.com/channel/' + channelId + '" title="See more videos by ' + channelName + '">More videos by ' + channelName + '</a></div>' + '</div>';
+        
+        $('#search-results').append(html);
+
+    })
+  }
+
+
+  var colorRepProgress = function(id, width) {
+    $("#"+id).css("background", "linear-gradient(to right, #4682B4 0%, #4682B4 "+ (width*10)+"%, #d3d3d3 "+(width*10)+"%, #d3d3d3 100%");
+  };
     
   populateTodayExercise();
 
   $("#exercises").on("click", function getExerciseInfo(event) {
 
-    currentWorkout = event.target.id
+
 
     if (event.target.className === "btn btn-primary") {
       $("#exercise-progress").empty();
+      $('#search-results').empty();
+      repsArray = []
+      currentWorkout = event.target.id
+      searchTerm = currentWorkout;
+
+      getRequest(searchTerm);
+      workoutLog.exercise = "";
+      workoutLog.setsAndReps = {};      
       var selectedExercise = event.target.id;
-            
       var numSets = phase1.day1[selectedExercise].sets;
       var numReps = phase1.day1[selectedExercise].reps;
-
       for (var i = 0; i < numSets; i++) {
-        $("#exercise-progress").append("Set "+(i+1)+" ");
-        $("#exercise-progress").append("Reps: <span id='rep-counter-"+(i+1)+"'>");
-        $("#exercise-progress").append("<input type='range' min='0' max='"+numReps+"' value='0' class='slider' id='"+(i+1)+"'>");
-        $("#exercise-progress").append("<label class='checkbox-inline'><input type='checkbox' value='' class='checkbox' id='checkbox-"+(i+1)+"'>Completed?</label><br><br>");     
+        $("#exercise-progress").append(
+          "<p><span class='label label-primary label-text'>Set "+(i+1)+"</span>"+
+          "<span class='label label-info label-text'>Reps: <span id='rep-counter-"+(i+1)+"'>0</span></span>"+
+          "<label class='checkbox-inline pull-right'><input type='checkbox' class='checkbox !checked' id='checkbox-"+(i+1)+"'></label><span class='label label-warning label-text pull-right'><b>Completed set? &nbsp</b></span>"+
+          "<p><input type='range' min='0' max='"+numReps+"' value='0' class='slider' id='"+(i+1)+"'></p><br>"
+        );     
       };
+      $("#exercise-progress").append("<button id='done' class='btn btn-primary'>Done with "+selectedExercise+"</button>");
+      workoutLog.exercise = selectedExercise;
+      $("#muscles-worked").html("<u><b>Muscles worked out</b></u><br>"+phase1.day1[selectedExercise].muscles);
+
     };
   });
-  
-  //Create checkbox for whether or not set was completed. True or false?
 
   $(document).on("input", ".slider", function(event) {
     var repCounterID = event.target.id;
     $("#rep-counter-"+repCounterID).html($(this).val());
-    $("#rep-counter-"+repCounterID).data("reps", $(this).val())
+    colorRepProgress(repCounterID, $(this).val());
   });
 
   $(document).on("click", ".checkbox", function(event) {
     var checkboxID = event.target.id;
-    var splitCheckBoxID = checkboxID.split('')
-    var repID = splitCheckBoxID[splitCheckBoxID.length - 1]
-    currentSet = repID;
-    currentCaloriesPerRep = phase1.day1[currentWorkout].calories;
-    var amountOfReps = $("#rep-counter-"+repID).data("reps")
-    console.log("workout: "+currentWorkout+", set: "+currentSet+", reps: "+amountOfReps+" Cals per Rep: "+currentCaloriesPerRep)
+    var setNumber = checkboxID.split("-")[1];
+    if ($("#"+checkboxID).attr("class") === "checkbox !checked") {
+      $("#"+checkboxID).attr("class", "checkbox checked");
+      $("#"+setNumber).attr("class", "slider-done");
+      document.getElementById(setNumber).disabled = true;
+      var repsCompleted = $("#rep-counter-"+setNumber).html();
+      var intRepsCompleted = parseInt(repsCompleted)
+      repsArray.push(intRepsCompleted)
+      workoutLog.setsAndReps[setNumber-1] = repsCompleted;
+    } else if ($("#"+checkboxID).attr("class") === "checkbox checked") {
+        $("#"+checkboxID).attr("class", "checkbox !checked");
+        $("#"+setNumber).attr("class", "slider");
+        document.getElementById(setNumber).disabled = false;
+        delete workoutLog.setsAndReps["Set "+setNumber];
+    };
+  });
 
-    var newCalories = 0;
+  $(document).on("click", "#done", function(event) {
+    console.log(workoutLog.setsAndReps[0]);
+    console.log(workoutLog.setsAndReps)
+    console.log(repsArray)
+    console.log(phase1.day1[currentWorkout].calories)
+    var totalReps = 0;
 
-    database.ref("users").once('value', function(snap)
+
+    for (var i=0; i<repsArray.length; i++)
     {
-      console.log(snap.val()[userID])
-      console.log(snap.val()[userID].calories)
-      console.log(currentCaloriesPerRep*amountOfReps)
-      newCalories = snap.val()[userID].calories - currentCaloriesPerRep*amountOfReps
+      totalReps = totalReps + repsArray[i]
+    }
 
-      var tempCalArray = snap.val()[userID].calsOverTime;
-      tempCalArray.push(newCalories)
+    var oldCals = 0;
+
+
+    database.ref("users/"+userID).once("value", function(snap)
+    {
+      oldCals = snap.val().calories
+      var oldCalArray = snap.val().calsOverTime
+      console.log("old cals "+oldCals)
+      console.log("old cals Array "+oldCalArray)
+
+      var newCals = oldCals - totalReps*phase1.day1[currentWorkout].calories
+      oldCalArray.push(newCals)
 
       database.ref("users/"+userID).update(
       {
-        calories: newCalories,
-        calsOverTime: tempCalArray
+        calories: newCals,
+        calsOverTime: oldCalArray
       })
     })
 
-
+    repsArray = []
   });
 
 });
