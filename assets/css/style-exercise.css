@@ -60,3 +60,13 @@
     font-size: 15px;
     margin-right: 5px;
 };
+
+#work-out-hover:hover
+{
+  background-color: red;
+}
+
+.panel .panel-primary
+{
+    margin-bottom: 30px;
+}

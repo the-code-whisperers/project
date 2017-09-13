@@ -21,6 +21,8 @@ var calDiv = $('#cals')
 var progressBar = $('.progress-bar')
 var posProgress = $('#pos-progress')
 var negProgress = $('#neg-progress')
+var foodShown = false
+var workOutShown = false
 
 console.log(token)
 
@@ -147,6 +149,46 @@ else
 			}
 		});
 	}
+
+	$('#food-hover').on('click', function(event)
+	{
+		if (foodShown)
+		{
+			$('#food-body').slideUp()
+			foodShown = false;
+		}
+
+		else if (!foodShown)
+		{
+			$('#food-body').slideDown()
+			foodShown = true;
+		}
+	})
+
+	$('#work-out-hover').on('click', function(event)
+	{
+		if (workOutShown)
+		{
+			$('#work-out-body').slideUp()
+			workOutShown = false;
+		}
+
+		else if (!workOutShown)
+		{
+			$('#work-out-body').slideDown()
+			workOutShown = true;
+		}
+	})
+
+/*	$('#food-panel').hover(function()
+	{
+		$('#food-body').show();
+
+	}, 
+		function()
+		{
+			$('#food-body').hide()
+	})*/
 
 	$('#button').on('click', function(event)
 	{
