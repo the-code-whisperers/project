@@ -163,6 +163,13 @@ else
 
 	$('#new-day').on('click', function(event)
 	{
+		
+		$('#exercise-progress').empty();
+		$('#exercise-instructions').hide();
+		$('#foods-search-result').hide();
+		$('#foods-added').empty();
+		$('#search').val("");
+
 		var calarray = [0]
 
 		database.ref("users/"+userID).update(

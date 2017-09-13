@@ -49,8 +49,8 @@ $(document).ready(function() {
 
     $.each(results, function (key, item) {
 
-        // console.log(key);
-        // console.log(item);
+        console.log(key);
+        console.log(item);
         var imgs = item.snippet.thumbnails.high.url;
         var title = item.snippet.title;
         var videoId = item.id.videoId;
@@ -74,11 +74,10 @@ $(document).ready(function() {
 
   $("#exercises").on("click", function getExerciseInfo(event) {
 
-
-
     if (event.target.className === "btn btn-primary") {
       $("#exercise-progress").empty();
       $('#search-results').empty();
+      $("#exercise-instructions").show();
       repsArray = []
       currentWorkout = event.target.id
       searchTerm = currentWorkout;
@@ -129,7 +128,6 @@ $(document).ready(function() {
 
   $(document).on("click", ".checkbox", function(event) {
     var checkboxID = event.target.id;
-    console.log(checkboxID);
     var setNumber = checkboxID.split("-")[1];
     if ($("#"+checkboxID).attr("class") === "checkbox !checked checkbox-pointer") {
       $("#"+checkboxID).attr("class", "checkbox checked checkbox-pointer");
