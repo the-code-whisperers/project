@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+  //Helper functions and variables.
+
   var workoutLog = {
     exercise: "",
     setsAndReps: []
@@ -11,7 +13,7 @@ $(document).ready(function() {
   var numSets = 0;
   var numReps = 0;
 
-  var populateTodayExercise = function() {
+  var showTodaysExerciseOptions = function() {
 
     for (var x in phase1.day1) {
         var exerciseDiv = $("<button>");
@@ -30,9 +32,9 @@ $(document).ready(function() {
       key: 'AIzaSyD7beeskMiAH3aGuOyURD06SuubXkNHmx8',
       maxResults: 10,
       q: searchTerm,
-    }
+    };
 
-    url='https://www.googleapis.com/youtube/v3/search'
+    url='https://www.googleapis.com/youtube/v3/search';
 
     $.getJSON(url, searchParams, function(data) {
 
@@ -41,7 +43,6 @@ $(document).ready(function() {
       showResults(resultsArray);
     });
   };
-
 
   var showResults = function(results) {
     var html = "";
@@ -75,10 +76,10 @@ $(document).ready(function() {
         repNumberContainer.html("Reps: "+"<span id='rep-counter-"+(setInProgress+1)+"'>0</span>");
 
         var setCheckBoxContainer = $("<span>");
-        setCheckBoxContainer.attr("class", "label label-warning label-text pull-right");
         var setCheckBoxLabel = $("<label>");
-        setCheckBoxLabel.attr("class", "checkbox-inline");
         var setCheckBox = $("<input>");
+        setCheckBoxContainer.attr("class", "label label-warning label-text pull-right");   
+        setCheckBoxLabel.attr("class", "checkbox-inline");
         setCheckBox.attr({type: "checkbox", class: "checkbox !checked checkbox-pointer", id: "checkbox-"+(setInProgress+1)});
         setCheckBoxLabel.append(setCheckBox);
         setCheckBoxLabel.append("<b>Completed set?</b>");
@@ -91,12 +92,14 @@ $(document).ready(function() {
       };
   };
 
-  var colorRepProgress = function(id, width) {
+  var fillRepProgress = function(id, width) {
 
     $("#"+id).css("background", "linear-gradient(to right, #4682B4 0%, #4682B4 "+ (width*10)+"%, #d3d3d3 "+(width*10)+"%, #d3d3d3 100%");
   };
+
+  //App begins here!
     
-  populateTodayExercise();
+  showTodaysExerciseOptions();
 
   $("#exercises").on("click", function getExerciseInfo(event) {
 
@@ -108,32 +111,33 @@ $(document).ready(function() {
       $('#search-results').empty();
       $("#exercise-instructions").show();
       repsArray = []
-      currentWorkout = event.target.id
-      searchTerm = currentWorkout;
+      // currentWorkout = event.target.id;
+      selectedExercise = event.target.id;
+      // searchTerm = currentWorkout;
+      searchTerm = selectedExercise;
 
       getRequest(searchTerm);
       workoutLog.exercise = "";
       workoutLog.setsAndReps = {};      
-      selectedExercise = event.target.id;
+      // selectedExercise = event.target.id;
       numSets = phase1.day1[selectedExercise].sets;
       numReps = phase1.day1[selectedExercise].reps;
 
       addSetAndRep(currentSet, numReps, numSets);
            
-    $("#done-button-container").append("<button id='done' class='btn btn-primary'>Done with "+selectedExercise+"</button>");
-    workoutLog.exercise = selectedExercise;
-    $("#muscles-worked").html("<u><b>Muscles worked out</b></u><br>"+phase1.day1[selectedExercise].muscles);
+      $("#done-button-container").append("<button id='done' class='btn btn-primary'>Done with "+selectedExercise+"</button>");
+      workoutLog.exercise = selectedExercise;
     };
   });
 
-  $(document).on("input", ".slider", function(event) {
+  $(document).on("input", ".slider", function adjustSlider(event) {
 
     var repCounterID = event.target.id;
     $("#rep-counter-"+repCounterID).html($(this).val());
-    colorRepProgress(repCounterID, $(this).val());
+    fillRepProgress(repCounterID, $(this).val());
   });
 
-  $(document).on("click", ".checkbox", function(event) {
+  $(document).on("click", ".checkbox", function finishSet(event) {
 
     var checkboxID = event.target.id;
     var setNumber = checkboxID.split("-")[1];
@@ -149,12 +153,12 @@ $(document).ready(function() {
     addSetAndRep(currentSet, numReps, numSets);
   });
 
-  $(document).on("click", "#done", function(event) {
+  $(document).on("click", "#done", function finishExercise(event) {
 
-    console.log(workoutLog.setsAndReps[0]);
-    console.log(workoutLog.setsAndReps);
+    // console.log(workoutLog.setsAndReps[0]);
+    // console.log(workoutLog.setsAndReps);
     console.log(repsArray);
-    console.log(phase1.day1[currentWorkout].calories);
+    console.log(phase1.day1[selectedExercise].calories);
     var totalReps = 0;
     document.getElementById("done").disabled = true;
 
@@ -172,7 +176,7 @@ $(document).ready(function() {
       console.log("old cals "+oldCals);
       console.log("old cals Array "+oldCalArray);
 
-      var newCals = oldCals - totalReps*phase1.day1[currentWorkout].calories;
+      var newCals = oldCals - totalReps*phase1.day1[selectedExercise].calories;
       oldCalArray.push(newCals);
 
       database.ref("users/"+userID).update(
@@ -187,7 +191,7 @@ $(document).ready(function() {
       document.getElementById("checkbox-"+(currentSet+1)).disabled = true;
       $("#"+(currentSet+1)).attr("class", "slider-done");
     };
-    
+
     repsArray = [];
   });
 
