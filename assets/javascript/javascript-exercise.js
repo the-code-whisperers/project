@@ -34,7 +34,7 @@ $(document).ready(function() {
       q: searchTerm,
     };
 
-    url='https://www.googleapis.com/youtube/v3/search';
+    url = 'https://www.googleapis.com/youtube/v3/search';
 
     $.getJSON(url, searchParams, function(data) {
 
@@ -94,7 +94,7 @@ $(document).ready(function() {
 
   var fillRepProgress = function(id, width) {
 
-    $("#"+id).css("background", "linear-gradient(to right, #4682B4 0%, #4682B4 "+ (width*10)+"%, #d3d3d3 "+(width*10)+"%, #d3d3d3 100%");
+    $("#"+id).css("background", "linear-gradient(to right, #4682B4 0%, #4682B4 "+(width*10)+"%, #d3d3d3 "+(width*10)+"%, #d3d3d3 100%");
   };
 
   //App begins here!
@@ -162,7 +162,7 @@ $(document).ready(function() {
     var totalReps = 0;
     document.getElementById("done").disabled = true;
 
-    for (var i=0; i<repsArray.length; i++)
+    for (var i = 0; i < repsArray.length; i++)
     {
       totalReps = totalReps + repsArray[i];
     };
@@ -186,7 +186,7 @@ $(document).ready(function() {
       })
     });
     
-    for (var i = 0; i<(currentSet+1); i++) {
+    for (var i = 0; i < (currentSet+1); i++) {
       console.log("currentSet: "+(currentSet+1),"checkbox-"+(currentSet+1));
       document.getElementById("checkbox-"+(currentSet+1)).disabled = true;
       $("#"+(currentSet+1)).attr("class", "slider-done");
