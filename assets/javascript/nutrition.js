@@ -28,14 +28,14 @@ console.log(token)
 
 if (token === null)
 {
-	var login = $("<a href = 'login.html'></a>")
+	var login = $("<a href = 'index.html'></a>")
 	$('#logout').hide()
 	$('#user-name').html("Login Here")
 	$("#new-day").html("Login")
 
 	$("#new-day").on("click", function()
 	{
-		window.location.href = 'login.html';
+		window.location.href = 'index.html';
 	})
 	//login.append($("#user-name"))
 }
@@ -205,6 +205,14 @@ else
 
 	$('#new-day').on('click', function(event)
 	{
+		
+		$('#exercise-progress').empty();
+		$('#exercise-instructions').hide();
+		$('#foods-search-result').hide();
+		$('#foods-added').empty();
+		$('#search').val("");
+		$("#done-button-container").empty();
+
 		var calarray = [0]
 
 		database.ref("users/"+userID).update(
@@ -217,7 +225,7 @@ else
 	$('#logout').on('click', function(event)
 	{
 		sessionStorage.clear();
-		window.location.href = 'login.html';
+		window.location.href = 'index.html';
 	})
 
 	/*$('#chartModal').modal("show").on('shown', function(event)
