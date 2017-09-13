@@ -49,8 +49,8 @@ $(document).ready(function() {
 
     $.each(results, function (key, item) {
 
-        console.log(key);
-        console.log(item);
+        // console.log(key);
+        // console.log(item);
         var imgs = item.snippet.thumbnails.high.url;
         var title = item.snippet.title;
         var videoId = item.id.videoId;
@@ -90,17 +90,34 @@ $(document).ready(function() {
       var numSets = phase1.day1[selectedExercise].sets;
       var numReps = phase1.day1[selectedExercise].reps;
       for (var i = 0; i < numSets; i++) {
-        $("#exercise-progress").append(
-          "<p><span class='label label-primary label-text'>Set "+(i+1)+"</span>"+
-          "<span class='label label-info label-text'>Reps: <span id='rep-counter-"+(i+1)+"'>0</span></span>"+
-          "<label class='checkbox-inline pull-right'><input type='checkbox' class='checkbox !checked' id='checkbox-"+(i+1)+"'></label><span class='label label-warning label-text pull-right'><b>Completed set? &nbsp</b></span>"+
-          "<p><input type='range' min='0' max='"+numReps+"' value='0' class='slider' id='"+(i+1)+"'></p><br>"
-        );     
-      };
-      $("#exercise-progress").append("<button id='done' class='btn btn-primary'>Done with "+selectedExercise+"</button>");
-      workoutLog.exercise = selectedExercise;
-      $("#muscles-worked").html("<u><b>Muscles worked out</b></u><br>"+phase1.day1[selectedExercise].muscles);
+        var setNumberContainer = $("<span>");
+        setNumberContainer.attr("class", "label label-primary label-text");
+        setNumberContainer.text("Set "+(i+1));
 
+        var repNumberContainer = $("<span>");
+        repNumberContainer.attr("class", "label label-info label-text");
+        repNumberContainer.html("Reps: "+"<span id='rep-counter-"+(i+1)+"'>0</span>");
+
+        var setCheckBoxContainer = $("<span>");
+        setCheckBoxContainer.attr("class", "label label-warning label-text pull-right");
+        var setCheckBoxLabel = $("<label>");
+        setCheckBoxLabel.attr("class", "checkbox-inline");
+        var setCheckBox = $("<input>");
+        setCheckBox.attr({type: "checkbox", class: "checkbox !checked checkbox-pointer", id: "checkbox-"+(i+1)});
+        setCheckBoxLabel.append(setCheckBox);
+        setCheckBoxLabel.append("<b>Completed set?</b>");
+        setCheckBoxContainer.append(setCheckBoxLabel);
+ 
+        var repSliderBar = $("<input>");
+        repSliderBar.attr({type: "range", min: "0", max: numReps, value: 0, class: "slider", id: (i+1)});
+
+        $("#exercise-progress").append(setNumberContainer, repNumberContainer, setCheckBoxContainer, "<p>", repSliderBar, "</p>", "<br>");
+
+      };
+
+    $("#exercise-progress").append("<button id='done' class='btn btn-primary'>Done with "+selectedExercise+"</button>");
+    workoutLog.exercise = selectedExercise;
+    $("#muscles-worked").html("<u><b>Muscles worked out</b></u><br>"+phase1.day1[selectedExercise].muscles);
     };
   });
 
@@ -112,17 +129,18 @@ $(document).ready(function() {
 
   $(document).on("click", ".checkbox", function(event) {
     var checkboxID = event.target.id;
+    console.log(checkboxID);
     var setNumber = checkboxID.split("-")[1];
-    if ($("#"+checkboxID).attr("class") === "checkbox !checked") {
-      $("#"+checkboxID).attr("class", "checkbox checked");
+    if ($("#"+checkboxID).attr("class") === "checkbox !checked checkbox-pointer") {
+      $("#"+checkboxID).attr("class", "checkbox checked checkbox-pointer");
       $("#"+setNumber).attr("class", "slider-done");
       document.getElementById(setNumber).disabled = true;
       var repsCompleted = $("#rep-counter-"+setNumber).html();
       var intRepsCompleted = parseInt(repsCompleted)
       repsArray.push(intRepsCompleted)
       workoutLog.setsAndReps[setNumber-1] = repsCompleted;
-    } else if ($("#"+checkboxID).attr("class") === "checkbox checked") {
-        $("#"+checkboxID).attr("class", "checkbox !checked");
+    } else if ($("#"+checkboxID).attr("class") === "checkbox checked checkbox-pointer") {
+        $("#"+checkboxID).attr("class", "checkbox !checked checkbox-pointer");
         $("#"+setNumber).attr("class", "slider");
         document.getElementById(setNumber).disabled = false;
         delete workoutLog.setsAndReps["Set "+setNumber];

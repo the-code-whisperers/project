@@ -30,11 +30,11 @@ video {
   transform: translate(-50%, -50%);
 }
 
-input
+/*input
 {
 	width:80%;
 }
-
+*/
 
 .panel{
 	background: rgba(230, 230, 230, 0.5);
