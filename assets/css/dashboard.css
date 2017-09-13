@@ -59,6 +59,7 @@ input
 
 #foods-search-result
 {
+  display:none;
   overflow: scroll;
   height: 480px;
 }
@@ -70,6 +71,7 @@ input
   border: 1px solid black;
   height: 40px;
   margin-bottom:30px;
+  overflow: hidden;
 }
 
 #pos-progress
@@ -79,7 +81,7 @@ input
   width: 0%;
   height: 38px;
   left:50%;
-  overflow:hidden;
+  overflow: hidden;
 }
 
 #neg-progress

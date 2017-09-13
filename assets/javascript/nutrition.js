@@ -132,6 +132,7 @@ else
 		}).done(function(response)
 		{	
 			console.log(response.hits)
+			$('#foods-search-result').show()
 
 			for (var i=0; i<response.hits.length; i++)
 			{
