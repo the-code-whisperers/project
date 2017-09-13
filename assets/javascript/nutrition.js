@@ -28,14 +28,14 @@ console.log(token)
 
 if (token === null)
 {
-	var login = $("<a href = 'login.html'></a>")
+	var login = $("<a href = 'index.html'></a>")
 	$('#logout').hide()
 	$('#user-name').html("Login Here")
 	$("#new-day").html("Login")
 
 	$("#new-day").on("click", function()
 	{
-		window.location.href = 'login.html';
+		window.location.href = 'index.html';
 	})
 	//login.append($("#user-name"))
 }
@@ -224,7 +224,7 @@ else
 	$('#logout').on('click', function(event)
 	{
 		sessionStorage.clear();
-		window.location.href = 'login.html';
+		window.location.href = 'index.html';
 	})
 
 	/*$('#chartModal').modal("show").on('shown', function(event)
