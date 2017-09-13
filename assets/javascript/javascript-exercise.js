@@ -158,12 +158,6 @@ $(document).ready(function() {
     var totalReps = 0;
     document.getElementById("done").disabled = true;
 
-    for (var i = 0; i<(currentSet+1); i++) {
-      console.log("currentSet: "+(currentSet+1),"checkbox-"+(currentSet+1));
-      document.getElementById("checkbox-"+(currentSet+1)).disabled = true;
-      $("#"+(currentSet+1)).attr("class", "slider-done");
-    };
-
     for (var i=0; i<repsArray.length; i++)
     {
       totalReps = totalReps + repsArray[i];
@@ -186,8 +180,14 @@ $(document).ready(function() {
         calories: newCals,
         calsOverTime: oldCalArray
       })
-    })
-
+    });
+    
+    for (var i = 0; i<(currentSet+1); i++) {
+      console.log("currentSet: "+(currentSet+1),"checkbox-"+(currentSet+1));
+      document.getElementById("checkbox-"+(currentSet+1)).disabled = true;
+      $("#"+(currentSet+1)).attr("class", "slider-done");
+    };
+    
     repsArray = [];
   });
 
