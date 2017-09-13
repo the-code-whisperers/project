@@ -27,6 +27,7 @@ console.log(token)
 if (token === null)
 {
 	var login = $("<a href = 'login.html'></a>")
+	$('#logout').hide()
 	$('#user-name').html("Login Here")
 	$("#new-day").html("Login")
 
@@ -169,6 +170,12 @@ else
 			calories: 0,
 			calsOverTime: calarray
 		})
+	})
+
+	$('#logout').on('click', function(event)
+	{
+		sessionStorage.clear();
+		window.location.href = 'login.html';
 	})
 
 	/*$('#chartModal').modal("show").on('shown', function(event)
