@@ -58,9 +58,10 @@ $(document).ready(function() {
         var channelName = item.snippet.channelTitle;
         var videoURL = "https://www.youtube.com/watch?v=" + videoId;
         
-        html = '<div class = "containerYT">' + '<a href="https://www.youtube.com/watch?v=' + videoId + '"><img src="' + imgs + '" title="' + title + '"class= img-responsive' + '></a>' + '<div class = "overlayYT">' + '<div class = "textYT">' + title + '</div>' + '</div>' + '</div>';
+        html = '<a href="https://www.youtube.com/watch?v=' + videoId + '" target="_blank"><div class = "containerYT"><img src="' + imgs + '" title="' + title + '"class= img-responsive' + '>' + '<div class = "overlayYT">' + '<div class = "textYT">' + title + '</div>' + '</div>' + '</div></a>';
         
         $('#search-results').append(html);
+        $('#search-results').attr('href', 'videoId')
     });
   };
 
