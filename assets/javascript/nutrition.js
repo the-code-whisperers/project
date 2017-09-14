@@ -24,6 +24,7 @@ var negProgress = $('#neg-progress')
 var foodShown = false
 var workOutShown = false
 
+
 console.log(token)
 
 if (token === null)
@@ -75,6 +76,40 @@ else
 			}
 		}
 	})
+
+	var getBMR = function()
+	{
+		var BMR = 0;
+
+		database.ref("users/"+userID).once('value', function(snap)
+		{
+			console.log(snap.val())
+		  	weight = snap.val().weight;
+		  	height = snap.val().height;
+		  	age = snap.val().age;
+		  	gender = snap.val().gender;
+
+			if (gender === 'Male')
+			{
+				BMR = 10 / 2.204 * weight + 6.25 / .3937 * height - 5 * age + 5;
+				//BMR = 10 * weight + 6.25  * height + 5 * age + 5;
+			}
+
+			else if (gender = 'Female')
+			{
+				BMR = 10 / 2.204 * weight + 6.25 / .3937 * height - 5 * age - 161;
+			}
+
+			else if (gener = "Prefer not to Answer")
+	        {
+	        	BMR = 10 / 2.204 * weight + 6.25 / .3937 * height - 5 * age - 83;
+	        }
+		})
+
+		BMR = Math.floor(BMR)
+
+		return BMR
+	}
 
 	/*database.ref("users/"+userID).once('value', function(snap)
 	{
@@ -214,10 +249,12 @@ else
 		$("#done-button-container").empty();
 
 		var calarray = [0]
+		var BMR = -1*getBMR();
+		console.log(BMR)
 
 		database.ref("users/"+userID).update(
 		{
-			calories: 0,
+			calories: BMR,
 			calsOverTime: calarray
 		})
 	})

@@ -127,6 +127,24 @@ $('#create').on('click', function(event)
       {
         var calsOverTime = [0]
 
+        if (gender === 'Male')
+        {
+          var BMR = 10 / 2.204 * weight + 6.25 / .3937 * height - 5 * age + 5;
+          //BMR = 10 * weight + 6.25  * height + 5 * age + 5;
+        }
+
+        else if (gender = 'Female')
+        {
+          var BMR = 10 / 2.204 * weight + 6.25 / .3937 * height - 5 * age - 161;
+        }
+
+        else if (gener = "Prefer not to Answer")
+        {
+          var BMR = 10 / 2.204 * weight + 6.25 / .3937 * height - 5 * age - 83;
+        }
+
+        BMR = -1*Math.floor(BMR)
+
           database.ref('users').once('value', function(snap)
           {
             if (!snap.hasChild('0'))
@@ -143,7 +161,7 @@ $('#create').on('click', function(event)
                 height: height,
                 weight: weight,
                 gender: gender,
-                calories: 0,
+                calories: BMR,
                 calsOverTime: calsOverTime,
                 token: token
               })
@@ -178,7 +196,7 @@ $('#create').on('click', function(event)
                     height: height,
                     weight: weight,
                     gender: gender,
-                    calories: 0,
+                    calories: BMR,
                     calsOverTime: calsOverTime,
                     token: token
                   })
